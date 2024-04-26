@@ -1,6 +1,6 @@
-# background_bctivity_recognition_with_database
+# background_activity_recognition_with_database
 
-Health Spark is aaaa an innovative application
+Health Spark is an innovative application
 
 ## Getting Started
 
