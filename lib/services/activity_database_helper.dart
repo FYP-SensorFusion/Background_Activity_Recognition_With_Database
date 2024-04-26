@@ -63,10 +63,10 @@ class DatabaseHelper {
     return List.generate(maps.length, (index) => ActivityModel.fromJson(maps[index]));
   }
 
-  static Future<Map<String, int>> getActivitiesLastWeek() async {
+  static Future<Map<String, int>> getActivitiesforGivenDuration(int duration) async {
     final db = await _getDB();
     final now = DateTime.now();
-    final lastWeekStart = now.subtract(Duration(days: now.weekday - 1));
+    final lastWeekStart = now.subtract(Duration(days: duration));
 
     final maps = await db.rawQuery('''
       SELECT type, SUM(duration) AS total_duration
@@ -80,5 +80,18 @@ class DatabaseHelper {
     ]);
     return Map.fromIterable(maps, key: (item) => item['type'] as String, value: (item) => item['total_duration'] as int);
   }
+  static Future<Map<String, int>> getTotalDurationForAllActivities() async {
+    final db = await _getDB();
+
+    final maps = await db.rawQuery('''
+    SELECT type, SUM(duration) AS total_duration
+    FROM Activity
+    WHERE type != ?
+    GROUP BY type
+  ''', [ActivityType.UNKNOWN.toString()]);
+
+    return Map.fromIterable(maps, key: (item) => item['type'] as String, value: (item) => item['total_duration'] as int);
+  }
+
 
 }

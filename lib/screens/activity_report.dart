@@ -10,18 +10,40 @@ class ActivityReportScreen extends StatefulWidget {
 
 class _ActivityReportScreenState extends State<ActivityReportScreen> {
   Future<Map<String, int>>? activities;
+  bool showLastmonthActivities = true;
 
   @override
   void initState() {
     super.initState();
-    activities = DatabaseHelper.getActivitiesLastWeek();
+    activities = DatabaseHelper.getActivitiesforGivenDuration(30); // Adjust duration as needed
+
+  }
+
+  void toggleView() {
+    setState(() {
+      showLastmonthActivities = !showLastmonthActivities;
+      if(showLastmonthActivities){
+        activities = DatabaseHelper.getActivitiesforGivenDuration(30); // Adjust duration as needed
+      }
+      else{
+        activities = DatabaseHelper.getTotalDurationForAllActivities(); // Adjust duration as needed
+      }// Adjust duration as needed
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Activity Report (Last Week)'),
+        title: Text(showLastmonthActivities
+            ? 'Last Month Activities'
+            : 'All Time Activities'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.calendar_today),
+            onPressed: toggleView,
+          ),
+        ],
       ),
       body: FutureBuilder<Map<String, int>>(
         future: activities,

@@ -6,5 +6,17 @@ String formatDuration(int duration) {
   final int days = hours ~/ 24;
   final int remainingHours = hours % 24;
 
-  return '${days}d ${remainingHours}h ${remainingMinutes}min ${seconds}sec';
+  String formattedDuration = '';
+  if (days > 0) {
+    formattedDuration += '${days}d ';
+  }
+  if (remainingHours > 0) {
+    formattedDuration += '${remainingHours}h ';
+  }
+  if (remainingMinutes > 0) {
+    formattedDuration += '${remainingMinutes}min ';
+  }
+  formattedDuration += '${seconds}sec';
+
+  return formattedDuration.trim();
 }
