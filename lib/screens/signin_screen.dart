@@ -35,14 +35,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/images/logo1.png"),
+                logoWidget("assets/images/logo2.png"),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 reusableTextField("Enter UserName", Icons.person_outline, false,
                     _emailTextController),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 reusableTextField("Enter Password", Icons.lock_outline, true,
                     _passwordTextController),
