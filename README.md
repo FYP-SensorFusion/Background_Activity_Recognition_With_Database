@@ -1,6 +1,6 @@
 # background_bctivity_recognition_with_database
 
-A new Flutter project.
+Health Spark is an innovative application
 
 ## Getting Started
 
