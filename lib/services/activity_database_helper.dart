@@ -1,4 +1,5 @@
 // database_helper.dart
+import 'package:flutter_activity_recognition/models/activity_type.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,7 +12,7 @@ class DatabaseHelper {
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _dbName),
         onCreate: (db, version) async => await db.execute(
-            "CREATE TABLE Activity(id INTEGER PRIMARY KEY, type TEXT NOT NULL, startTime TEXT NOT NULL, duration TEXT NOT NULL, lastUpdatedTime TEXT NOT NULL);"),
+            "CREATE TABLE Activity(id INTEGER PRIMARY KEY, type TEXT NOT NULL, startTime TEXT NOT NULL, duration INTEGER NOT NULL, lastUpdatedTime TEXT NOT NULL);"),
         version: _version);
   }
 
@@ -52,13 +53,32 @@ class DatabaseHelper {
   static Future<List<ActivityModel>?> getAllActivities() async {
     final db = await _getDB();
 
-    final List<Map<String, dynamic>> maps = await db.query("Activity");
-
+    final List<Map<String, dynamic>> maps = await db.query("Activity",
+        where: 'type != ?', whereArgs: [ActivityType.UNKNOWN.toString()]);
+        print(maps);
     if (maps.isEmpty) {
       return null;
     }
 
-    return List.generate(
-        maps.length, (index) => ActivityModel.fromJson(maps[index]));
+    return List.generate(maps.length, (index) => ActivityModel.fromJson(maps[index]));
   }
+
+  static Future<Map<String, int>> getActivitiesLastWeek() async {
+    final db = await _getDB();
+    final now = DateTime.now();
+    final lastWeekStart = now.subtract(Duration(days: now.weekday - 1));
+
+    final maps = await db.rawQuery('''
+      SELECT type, SUM(duration) AS total_duration
+      FROM Activity
+      WHERE type != ? AND startTime >= ? AND startTime < ?
+      GROUP BY type
+    ''', [
+      ActivityType.UNKNOWN.toString(),
+      lastWeekStart.toIso8601String(),
+      now.toIso8601String(),
+    ]);
+    return Map.fromIterable(maps, key: (item) => item['type'] as String, value: (item) => item['total_duration'] as int);
+  }
+
 }

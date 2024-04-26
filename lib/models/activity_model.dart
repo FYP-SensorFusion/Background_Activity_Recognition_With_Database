@@ -3,7 +3,7 @@ class ActivityModel {
   final int? id;
   final String type;
   final DateTime startTime;
-  final String duration;
+  final int duration;
   final DateTime lastUpdatedTime;
 
   ActivityModel({required this.type, required this.startTime, required this.duration, required this.lastUpdatedTime, this.id});

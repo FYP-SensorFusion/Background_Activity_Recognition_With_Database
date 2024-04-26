@@ -1,4 +1,5 @@
 import 'package:background_bctivity_recognition_with_database/screens/activities_screen.dart';
+import 'package:background_bctivity_recognition_with_database/screens/activity_report.dart';
 import 'package:background_bctivity_recognition_with_database/services/activity_recognition_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
@@ -100,25 +101,42 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Builder(
-        // Add this
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text('Flutter Activity Recognition'),
-            centerTitle: true,
-          ),
-          // body: _buildContentView(),
-          body: Container(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ActivitiesScreen()),
-              );
-            },
-            child: const Icon(Icons.view_list),
-          ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter Activity Recognition'),
+          centerTitle: true,
+        ),
+        body: Container(),
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: "activity_screan",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ActivitiesScreen()),
+                );
+              },
+              child: const Icon(Icons.view_list),
+            ),
+            const SizedBox(height: 16),
+            FloatingActionButton(
+              heroTag: "activity_report",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ActivityReportScreen()),
+                );
+                // Add logic to handle the activity report button
+                // Redirect to the report screen or perform any other action
+              },
+              child: const Icon(Icons.analytics),
+            ),
+          ],
         ),
       ),
     );

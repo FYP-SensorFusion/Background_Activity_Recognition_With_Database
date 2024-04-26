@@ -17,16 +17,18 @@ Future<void> setupActivityRecognition() async {
       var newActivityModel = ActivityModel(
         type: activity.type.toString(),
         startTime: DateTime.now(),
-        duration: "0",
+        duration: 0,
         lastUpdatedTime: DateTime.now(),
       );
       await DatabaseHelper.addActivity(newActivityModel);
     } else {
+      final now = DateTime.now();
+      final durationInSeconds = now.difference(lastActivity.startTime!).inSeconds.round(); // Round up to seconds
       var activityModel = ActivityModel(
         id: lastActivity.id,
         type: lastActivity.type,
         startTime: lastActivity.startTime,
-        duration: DateTime.now().difference(lastActivity.startTime!).toString(),
+        duration: durationInSeconds,
         lastUpdatedTime: DateTime.now(),
       );
       await DatabaseHelper.updateActivity(activityModel);
