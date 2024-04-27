@@ -12,7 +12,7 @@ class ActivityModel {
       id: json['id'],
       type: json['type'],
       startTime: DateTime.parse(json['startTime']),
-      duration: json['duration'],
+      duration: int.parse(json['duration']),
       lastUpdatedTime: DateTime.parse(json['lastUpdatedTime'])
   );
 

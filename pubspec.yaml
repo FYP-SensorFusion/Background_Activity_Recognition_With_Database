@@ -42,7 +42,10 @@ dependencies:
   intl: ^0.18.0
   firebase_core: ^2.30.1
   firebase_auth: ^4.19.4
-  carousel_slider: ^4.2.1
+  carousel_slider: ^4.2.1  # Replace with the latest version if needed
+  shared_preferences: any
+  path_provider: any
+  http:
 
 dev_dependencies:
   flutter_test:
