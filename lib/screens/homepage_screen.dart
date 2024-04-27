@@ -3,10 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../check_date.dart';
 import '../services/activity_database_helper.dart';
 import '../widgets/app_carousel_card.dart';
 import '../widgets/health_tip_card_widget.dart';
 import '../widgets/sleep_duration_Card.dart';
+import 'anxiety_detection.dart';
+import 'depression_detection.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
