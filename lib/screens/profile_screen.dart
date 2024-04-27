@@ -1,11 +1,10 @@
+import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ProfilePageScreen extends StatefulWidget {
-  ProfilePageScreen({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  ProfilePageScreen({Key? key}) : super(key: key);
 
   @override
   _ProfilePageScreenState createState() => _ProfilePageScreenState();
@@ -21,8 +20,21 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Details'),
+        title: const Text('User Details'),
         centerTitle: true,
+        backgroundColor: Colors.teal, // App bar color,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              FirebaseAuth.instance.signOut().then((value) {
+                print("Signed Out");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+              });
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: <Widget>[
