@@ -1,3 +1,4 @@
+import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/activity_model.dart';
 import '../services/activity_database_helper.dart';
@@ -19,6 +20,19 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
         appBar: AppBar(
           title: const Text('Activities'),
           centerTitle: true,
+          backgroundColor: Colors.teal, // App bar color,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {

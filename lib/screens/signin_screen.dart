@@ -1,4 +1,4 @@
-import 'package:background_activity_recognition_with_database/screens/homepage_screen.dart';
+import 'package:background_activity_recognition_with_database/screens/navigator_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/reset_passworrd_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,10 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     showFlashError(context, "SUCCESS", false);
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => MyHomePage(
-                                  title: 'Flutter Background Service with DB',
-                                )));
+                        MaterialPageRoute(builder: (context) => NavigatorPage(title: 'Life Spark',)));
                   }).catchError((error, stackTrace) {
                     switch (error.code) {
                       case 'channel-error':
