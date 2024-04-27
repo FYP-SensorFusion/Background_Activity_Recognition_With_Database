@@ -4,6 +4,11 @@ import 'package:background_bctivity_recognition_with_database/screens/signin_scr
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:background_bctivity_recognition_with_database/screens/anxiety_detection.dart';
+import 'package:background_bctivity_recognition_with_database/screens/depression_detection.dart';
+
+import '../check_date.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -18,6 +23,24 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     requestPermissions();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (await hasTwoWeeksPassedSinceLastTest()) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AnxietyDetection(
+                onTestFinished: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DepressionDetection()),
+                  );
+                  saveTestDate();
+                },
+              )),
+        );
+      }
+    });
   }
 
   void requestPermissions() async {
@@ -49,8 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) =>  SignInScreen()),
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
                 );
               },
               child: const Icon(Icons.logout),
@@ -61,8 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => ActivitiesScreen()),
+                  MaterialPageRoute(builder: (context) => ActivitiesScreen()),
                 );
               },
               child: const Icon(Icons.view_list),
