@@ -1,5 +1,6 @@
 import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
+import 'package:background_activity_recognition_with_database/screens/profile_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -89,9 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Life Spark'), // App name
+        title: const Text('Life Spark'),
         centerTitle: true,
-        backgroundColor: Colors.teal, // App bar color
+        backgroundColor: Colors.teal,
+        leading: null,
       ),
       body: Stack(
         // Use Stack for layering widgets
@@ -182,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ActivityReportScreen()),
+                          builder: (context) => ProfilePageScreen(title: "Profile Details")),
                     ),
                     child: Container(
                       padding:
