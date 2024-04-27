@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../color_utils.dart';
 import '../widgets/reusable_widget.dart';
-import 'homepage_screen.dart';
+import 'navigator_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .then((value) {
                         print("Created New Account");
                         Navigator.push(context,
-                             MaterialPageRoute(builder: (context) => MyHomePage(title: 'Flutter Background Service with DB',)));
+                             MaterialPageRoute(builder: (context) => NavigatorPage(title: 'Life Spark',)));
                       }).onError((error, stackTrace) {
                         print("Error ${error.toString()}");
                       });

@@ -1,3 +1,4 @@
+import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:background_activity_recognition_with_database/services/activity_database_helper.dart';
 
@@ -36,15 +37,32 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(showLastmonthActivities
-            ? 'Last Month Activities'
-            : 'All Time Activities'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.calendar_today),
-            onPressed: toggleView,
-          ),
-        ],
+        title: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: toggleView,
+            ),
+            Expanded(
+              child: Center(
+                child: Text(showLastmonthActivities
+                    ? 'Last Month Activities'
+                    : 'All Time Activities'),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.teal, // App bar color
       ),
       body: FutureBuilder<Map<String, int>>(
         future: activities,
