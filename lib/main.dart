@@ -1,5 +1,5 @@
-import 'package:background_bctivity_recognition_with_database/screens/signin_screen.dart';
-import 'package:background_bctivity_recognition_with_database/services/activity_recognition_function.dart';
+import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
+import 'package:background_activity_recognition_with_database/services/activity_recognition_function.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';

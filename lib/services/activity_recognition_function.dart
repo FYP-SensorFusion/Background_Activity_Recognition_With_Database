@@ -1,15 +1,13 @@
 // This function sets up the activity recognition stream
 import 'package:flutter_activity_recognition/flutter_activity_recognition.dart';
-import 'dart:developer' as dev;
-
 import '../models/activity_model.dart';
 import 'activity_database_helper.dart';
 
 Future<void> setupActivityRecognition() async {
-  print("called setupActivityRecognition ==================");
+  print("start Activity Recognition ==================");
   FlutterActivityRecognition.instance.activityStream.listen((Activity activity) async {
-    print("Activity Update Received: ${activity.type}"); // print the activity type
-    print("Confidence: ${activity.confidence}"); // print the confidence of the detected activity
+    // print("Activity Update Received: ${activity.type}"); // print the activity type
+    // print("Confidence: ${activity.confidence}"); // print the confidence of the detected activity
 
     ActivityModel? lastActivity = await DatabaseHelper.getLastUpdatedActivity();
 
@@ -23,7 +21,7 @@ Future<void> setupActivityRecognition() async {
       await DatabaseHelper.addActivity(newActivityModel);
     } else {
       final now = DateTime.now();
-      final durationInSeconds = now.difference(lastActivity.startTime!).inSeconds.round(); // Round up to seconds
+      final durationInSeconds = now.difference(lastActivity.startTime).inSeconds.round(); // Round up to seconds
       var activityModel = ActivityModel(
         id: lastActivity.id,
         type: lastActivity.type,
