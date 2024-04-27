@@ -1,5 +1,5 @@
-import 'package:background_bctivity_recognition_with_database/models/depression_detection_model.dart';
-import 'package:background_bctivity_recognition_with_database/services/anxiety_depression_database_helper.dart';
+import 'package:background_activity_recognition_with_database/models/depression_detection_model.dart';
+import 'package:background_activity_recognition_with_database/services/anxiety_depression_database_helper.dart';
 import 'package:flutter/material.dart';
 
 class DepressionDetection extends StatefulWidget {
