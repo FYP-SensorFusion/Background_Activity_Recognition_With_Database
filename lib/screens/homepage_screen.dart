@@ -1,5 +1,6 @@
 import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
+import 'package:background_activity_recognition_with_database/screens/profile_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
