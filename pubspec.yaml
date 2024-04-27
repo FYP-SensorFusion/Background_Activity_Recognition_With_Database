@@ -45,6 +45,7 @@ dependencies:
   carousel_slider: ^4.2.1  # Replace with the latest version if needed
   shared_preferences: any
   path_provider: any
+  google_fonts: ^6.2.1
   http:
 
 dev_dependencies:
