@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:background_bctivity_recognition_with_database/services/activity_database_helper.dart';
+import 'package:background_activity_recognition_with_database/services/activity_database_helper.dart';
 
 import '../utils.dart';
 
