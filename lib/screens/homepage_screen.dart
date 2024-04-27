@@ -31,7 +31,25 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     requestPermissions();
-    _changeTip(); // Start tip carousel on load
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (await hasTwoWeeksPassedSinceLastTest()) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AnxietyDetection(
+                    onTestFinished: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DepressionDetection()),
+                      );
+                      saveTestDate();
+                    },
+                  )),
+        );
+      }
+    });
+    // _changeTip(); // Start tip carousel on load
   }
 
   void _changeTip() async {
@@ -70,26 +88,30 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           ),
-        ],// App bar color,
+        ], // App bar color,
       ),
       body: Column(
         children: [
           SizedBox(
-          height: 300.0,
-          child: CarouselSlider(
-            items: _tipList.map((tip) => HealthTipCard( tip: tip,)).toList(),
-            options: CarouselOptions(
-              height: 300.0, // Set carousel height
-              viewportFraction: 1, // Show 80% of each card
-              enableInfiniteScroll: true, // Loop through tips
-              autoPlay: true, // Automatic rotation
-              autoPlayInterval:
-                  const Duration(seconds: 5), // Change time interval
-              autoPlayAnimationDuration:
-                  const Duration(milliseconds: 800), // Smooth transition
+            height: 300.0,
+            child: CarouselSlider(
+              items: _tipList
+                  .map((tip) => HealthTipCard(
+                        tip: tip,
+                      ))
+                  .toList(),
+              options: CarouselOptions(
+                height: 300.0, // Set carousel height
+                viewportFraction: 1, // Show 80% of each card
+                enableInfiniteScroll: true, // Loop through tips
+                autoPlay: true, // Automatic rotation
+                autoPlayInterval:
+                    const Duration(seconds: 5), // Change time interval
+                autoPlayAnimationDuration:
+                    const Duration(milliseconds: 800), // Smooth transition
+              ),
             ),
           ),
-        ),
           FutureBuilder<int>(
             future: DatabaseHelper.getLastDaySleepingDuration(),
             builder: (context, snapshot) {

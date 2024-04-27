@@ -45,6 +45,9 @@ dependencies:
   carousel_slider: ^4.2.1
   app_usage: ^3.0.1
   usage_stats: 1.2.0
+  shared_preferences: any
+  path_provider: any
+  http:
 
 dev_dependencies:
   flutter_test:
