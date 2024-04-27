@@ -42,7 +42,7 @@ class DatabaseHelper {
   static Future<ActivityModel?> getLastUpdatedActivity() async {
     final db = await _getDB();
     final List<Map<String, dynamic>> rows =
-        await db.query("Activity", orderBy: 'lastUpdatedTime DESC', limit: 1);
+    await db.query("Activity", orderBy: 'lastUpdatedTime DESC', limit: 1);
 
     if (rows.isEmpty) {
       return null;
@@ -53,17 +53,23 @@ class DatabaseHelper {
   static Future<List<ActivityModel>?> getAllActivities() async {
     final db = await _getDB();
 
-    final List<Map<String, dynamic>> maps = await db.query("Activity",
-        where: 'type != ?', whereArgs: [ActivityType.UNKNOWN.toString()]);
-        print(maps);
+    // Order by latest end time (assuming a field named 'endTime' exists)
+    final List<Map<String, dynamic>> maps = await db.query(
+      "Activity",
+      where: 'type != ?',
+      whereArgs: [ActivityType.UNKNOWN.toString()],
+      orderBy: 'startTime DESC',
+    );
     if (maps.isEmpty) {
       return null;
     }
 
-    return List.generate(maps.length, (index) => ActivityModel.fromJson(maps[index]));
+    return List.generate(
+        maps.length, (index) => ActivityModel.fromJson(maps[index]));
   }
 
-  static Future<Map<String, int>> getActivitiesforGivenDuration(int duration) async {
+  static Future<Map<String, int>> getActivitiesforGivenDuration(
+      int duration) async {
     final db = await _getDB();
     final now = DateTime.now();
     final lastWeekStart = now.subtract(Duration(days: duration));
@@ -78,8 +84,11 @@ class DatabaseHelper {
       lastWeekStart.toIso8601String(),
       now.toIso8601String(),
     ]);
-    return Map.fromIterable(maps, key: (item) => item['type'] as String, value: (item) => item['total_duration'] as int);
+    return Map.fromIterable(maps,
+        key: (item) => item['type'] as String,
+        value: (item) => item['total_duration'] as int);
   }
+
   static Future<Map<String, int>> getTotalDurationForAllActivities() async {
     final db = await _getDB();
 
@@ -90,8 +99,8 @@ class DatabaseHelper {
     GROUP BY type
   ''', [ActivityType.UNKNOWN.toString()]);
 
-    return Map.fromIterable(maps, key: (item) => item['type'] as String, value: (item) => item['total_duration'] as int);
+    return Map.fromIterable(maps,
+        key: (item) => item['type'] as String,
+        value: (item) => item['total_duration'] as int);
   }
-
-
 }

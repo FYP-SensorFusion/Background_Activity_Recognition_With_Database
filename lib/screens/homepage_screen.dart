@@ -1,5 +1,5 @@
 import 'package:background_bctivity_recognition_with_database/screens/activities_screen.dart';
-import 'package:background_bctivity_recognition_with_database/screens/activity_report.dart';
+import 'package:background_bctivity_recognition_with_database/screens/activity_report_screen.dart';
 import 'package:background_bctivity_recognition_with_database/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
