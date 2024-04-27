@@ -1,4 +1,5 @@
 import 'package:background_activity_recognition_with_database/screens/homepage_screen.dart';
+import 'package:background_activity_recognition_with_database/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
 import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
@@ -20,7 +21,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
     ActivitiesScreen(), // Replace with your actual screens
     ActivityReportScreen(),
     ActivityReportScreen(),
-    ActivityReportScreen(),
+    ProfilePageScreen(),
 
   ];
 
@@ -35,7 +36,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
             _currentIndex = index; // Update the selected tab
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -54,7 +55,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'User Profile',
+            label: 'User Details',
           ),
         ],
         selectedItemColor: Colors.teal.shade900,
