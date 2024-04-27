@@ -40,15 +40,15 @@ class _MyHomePageState extends State<MyHomePage> {
           context,
           MaterialPageRoute(
               builder: (context) => AnxietyDetection(
-                onTestFinished: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DepressionDetection()),
-                  );
-                  saveTestDate();
-                },
-              )),
+                    onTestFinished: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DepressionDetection()),
+                      );
+                      saveTestDate();
+                    },
+                  )),
         );
       }
     });
@@ -83,33 +83,38 @@ class _MyHomePageState extends State<MyHomePage> {
           32.0, // Adjust padding
       margin: const EdgeInsets.all(24.0), // Padding for outer container
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          opacity: 0.6,
+          image: AssetImage("assets/images/purple-sky.png"),
+          fit: BoxFit.fill,
+        ),
         borderRadius:
             BorderRadius.circular(16.0), // Border radius for outer container
-        color:
-            Colors.teal.shade100, // Light teal background for outer container
-        boxShadow: [
-          BoxShadow(
-            color: Colors.teal.shade100, // Subtle shadow
-            blurRadius: 1.0, // Blur radius
-            spreadRadius: 1.0, // Spread radius
-          ),
-        ],
+        // color:
+        //     Colors.teal.shade100, // Light teal background for outer container
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.teal.shade100, // Subtle shadow
+        //     blurRadius: 1.0, // Blur radius
+        //     spreadRadius: 1.0, // Spread radius
+        //   ),
+        // ],
       ),
       child: Padding(
         // Add padding around the content
         padding: const EdgeInsets.all(24.0), // Adjust padding for inner content
         child: Container(
           // Transparent container for inner content
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors
                 .transparent, // Remove background color for inner container
           ),
           child: Center(
             child: Text(
               tip,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0, // Increase text size
-                color: Colors.teal.shade900, // Dark teal text
+                color: Colors.white, // Dark teal text
               ),
             ),
           ),
@@ -124,7 +129,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Life Spark"), // Use widget.title for app name
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -136,22 +147,32 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           ),
-        ],// App bar color,
+        ], // App bar color,
       ),
-      body: Center(
-        child: SizedBox(
-          height: 500.0,
-          child: CarouselSlider(
-            items: _tipList.map((tip) => _buildTipCard(tip)).toList(),
-            options: CarouselOptions(
-              height: 500.0, // Set carousel height
-              viewportFraction: 1, // Show 80% of each card
-              enableInfiniteScroll: true, // Loop through tips
-              autoPlay: true, // Automatic rotation
-              autoPlayInterval:
-                  const Duration(seconds: 5), // Change time interval
-              autoPlayAnimationDuration:
-                  const Duration(milliseconds: 800), // Smooth transition
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/black-1.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: SizedBox(
+            height: 500.0,
+            child: CarouselSlider(
+              items: _tipList.map((tip) => _buildTipCard(tip)).toList(),
+              options: CarouselOptions(
+                height: 500.0, // Set carousel height
+                viewportFraction: 1, // Show 80% of each card
+                enableInfiniteScroll: true, // Loop through tips
+                autoPlay: true, // Automatic rotation
+                autoPlayInterval:
+                    const Duration(seconds: 5), // Change time interval
+                autoPlayAnimationDuration:
+                    const Duration(milliseconds: 800), // Smooth transition
+              ),
             ),
           ),
         ),

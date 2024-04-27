@@ -20,7 +20,13 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
         appBar: AppBar(
           title: const Text('Activities'),
           centerTitle: true,
-          backgroundColor: Colors.teal, // App bar color,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/purple-sky.png'),
+                  fit: BoxFit.fill),
+            ),
+          ),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -44,66 +50,76 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
           },
           child: const Icon(Icons.add),
         ),
-        body: FutureBuilder<List<ActivityModel>?>(
-          future: DatabaseHelper.getAllActivities(),
-          builder: (context, AsyncSnapshot<List<ActivityModel>?> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()));
-            } else if (snapshot.hasData) {
-              if (snapshot.data != null) {
-                return ListView.builder(
-                  itemBuilder: (context, index) => ActivityWidget(
-                    activity: snapshot.data![index],
-                    onTap: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ActivityScreen(
-                                    activity: snapshot.data![index],
-                                  )));
-                      setState(() {});
-                    },
-                    onLongPress: () async {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text(
-                                  'Are you sure you want to delete this note?'),
-                              actions: [
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.red)),
-                                  onPressed: () async {
-                                    await DatabaseHelper.deleteActivity(
-                                        snapshot.data![index]);
-                                    Navigator.pop(context);
-                                    setState(() {});
-                                  },
-                                  child: const Text('Yes'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('No'),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                  ),
-                  itemCount: snapshot.data!.length,
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/black-1.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: FutureBuilder<List<ActivityModel>?>(
+            future: DatabaseHelper.getAllActivities(),
+            builder: (context, AsyncSnapshot<List<ActivityModel>?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Center(child: Text(snapshot.error.toString()));
+              } else if (snapshot.hasData) {
+                if (snapshot.data != null) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) => ActivityWidget(
+                      activity: snapshot.data![index],
+                      onTap: () async {
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ActivityScreen(
+                                      activity: snapshot.data![index],
+                                    )));
+                        setState(() {});
+                      },
+                      onLongPress: () async {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text(
+                                    'Are you sure you want to delete this note?'),
+                                actions: [
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.red)),
+                                    onPressed: () async {
+                                      await DatabaseHelper.deleteActivity(
+                                          snapshot.data![index]);
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                    child: const Text('Yes'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('No'),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                    ),
+                    itemCount: snapshot.data!.length,
+                  );
+                }
+                return const Center(
+                  child: Text('No notes yet'),
                 );
               }
-              return const Center(
-                child: Text('No notes yet'),
-              );
-            }
-            return const SizedBox.shrink();
-          },
+              return const SizedBox.shrink();
+            },
+          ),
         ));
   }
 }

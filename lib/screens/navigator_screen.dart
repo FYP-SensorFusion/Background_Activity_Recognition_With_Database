@@ -22,7 +22,6 @@ class _NavigatorPageState extends State<NavigatorPage> {
     ActivityReportScreen(),
     ActivityReportScreen(),
     ProfilePageScreen(),
-
   ];
 
   @override
@@ -30,38 +29,36 @@ class _NavigatorPageState extends State<NavigatorPage> {
     return Scaffold(
       body: _screens[_currentIndex], // Display the selected screen
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index; // Update the selected tab
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.view_list),
-            label: 'Activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Activity Report',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.psychology),
-            label: 'Depression Report',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'User Details',
-          ),
-        ],
-        selectedItemColor: Colors.teal.shade900,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.teal.shade100,
-      ),
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index; // Update the selected tab
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.view_list),
+              label: 'Activities',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Activity Report',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.psychology),
+              label: 'Depression Report',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'User Details',
+            ),
+          ],
+          selectedItemColor: Colors.teal.shade900,
+          unselectedItemColor: Colors.grey),
     );
   }
 }

@@ -37,6 +37,13 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
         title: Row(
           children: [
             IconButton(
@@ -64,77 +71,87 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.teal, // App bar color
       ),
-      body: FutureBuilder<Map<String, int>>(
-        future: activities,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Wrap(
-                spacing: 16.0,
-                runSpacing: 16.0,
-                children: data.entries.map((entry) {
-                  final activityType = entry.key;
-                  final totalDuration = entry.value;
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize:
-                              MainAxisSize.min, // Avoid cards expanding
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center row content
-                              children: [
-                                Text(
-                                  'Activity Type:',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/black-1.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: FutureBuilder<Map<String, int>>(
+          future: activities,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final data = snapshot.data!;
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Wrap(
+                  spacing: 16.0,
+                  runSpacing: 16.0,
+                  children: data.entries.map((entry) {
+                    final activityType = entry.key;
+                    final totalDuration = entry.value;
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize:
+                                MainAxisSize.min, // Avoid cards expanding
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Center row content
+                                children: [
+                                  Text(
+                                    'Activity Type:',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 8.0),
-                                Text(
-                                  activityType.toString().split('.').last,
-                                  style: TextStyle(fontSize: 14.0),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 4.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center row content
-                              children: [
-                                Text(
-                                  'Total Duration:',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
+                                  SizedBox(width: 8.0),
+                                  Text(
+                                    activityType.toString().split('.').last,
+                                    style: TextStyle(fontSize: 14.0),
                                   ),
-                                ),
-                                SizedBox(width: 8.0),
-                                Text(
-                                  formatDuration(totalDuration),
-                                  style: TextStyle(fontSize: 14.0),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              SizedBox(height: 4.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Center row content
+                                children: [
+                                  Text(
+                                    'Total Duration:',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.0),
+                                  Text(
+                                    formatDuration(totalDuration),
+                                    style: TextStyle(fontSize: 14.0),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          return Center(child: CircularProgressIndicator());
-        },
+                    );
+                  }).toList(),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

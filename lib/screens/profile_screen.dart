@@ -22,7 +22,13 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
       appBar: AppBar(
         title: const Text('User Details'),
         centerTitle: true,
-        backgroundColor: Colors.teal, // App bar color,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -30,72 +36,75 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
             onPressed: () {
               FirebaseAuth.instance.signOut().then((value) {
                 print("Signed Out");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignInScreen()));
               });
             },
           ),
         ],
       ),
-      body: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.only(top: height / 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage:
-                        const AssetImage('assets/images/sample-profile.png'),
-                    radius: height / 10,
-                  ),
-                  SizedBox(
-                    height: height / 30,
-                  ),
-                ],
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/black-1.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: EdgeInsets.only(top: height / 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundImage:
+                          const AssetImage('assets/images/sample-profile.png'),
+                      radius: height / 10,
+                    ),
+                    SizedBox(
+                      height: height / 30,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: height / 2.2),
-            child: Container(
-              color: Colors.white,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: height / 2.6, left: width / 20, right: width / 20),
-            child: Column(
-              children: <Widget>[
-                infoChild(width, Icons.email, user?.email),
-                infoChild(width, Icons.verified_user, user?.uid != null ? "General User" : "Registered User"),
-                infoChild(width, Icons.north_east_rounded, user?.metadata.creationTime.toString()),
-                infoChild(width, Icons.north_west_rounded, user?.metadata.lastSignInTime.toString()),
-              ],
-            ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: height / 3, left: width / 25, right: width / 25),
+              child: Container(
+                alignment: Alignment.center,
+                width: 350,
+                height: 200,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    opacity: 0.6,
+                    image: AssetImage("assets/images/purple-sky.png"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    infoChild(width, Icons.email, user?.email),
+                    infoChild(width, Icons.verified_user,
+                        user?.uid != null ? "Registered User" : "General User"),
+                    infoChild(width, Icons.north_east_rounded,
+                        user?.metadata.creationTime.toString()),
+                    infoChild(width, Icons.north_west_rounded,
+                        user?.metadata.lastSignInTime.toString()),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
-
-  Widget headerChild(String header, int value) => Expanded(
-          child: Column(
-        children: <Widget>[
-          Text(header),
-          const SizedBox(
-            height: 8.0,
-          ),
-          Text(
-            '$value',
-            style: const TextStyle(
-                fontSize: 14.0,
-                color: Color(0xFF26CBE6),
-                fontWeight: FontWeight.bold),
-          )
-        ],
-      ));
 
   Widget infoChild(double width, IconData icon, data) => Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
@@ -111,14 +120,16 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
                 size: 36.0,
               ),
               SizedBox(
-                width: width / 20,
+                width: width / 10,
               ),
-              Text(data)
+              Text(
+                data,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
-          onTap: () {
-            print('Info Object selected');
-          },
         ),
       );
 }
