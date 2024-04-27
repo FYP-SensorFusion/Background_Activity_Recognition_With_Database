@@ -1,4 +1,4 @@
-import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
+import 'package:lifespark/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/activity_model.dart';
 import '../services/activity_database_helper.dart';
@@ -45,7 +45,7 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
           child: const Icon(Icons.add),
         ),
         body: FutureBuilder<List<ActivityModel>?>(
-          future: DatabaseHelper.getAllActivities(),
+          future: DatabaseHelper.getLastDayActivities(),
           builder: (context, AsyncSnapshot<List<ActivityModel>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();

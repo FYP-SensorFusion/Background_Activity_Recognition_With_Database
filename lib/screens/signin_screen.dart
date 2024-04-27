@@ -1,6 +1,6 @@
-import 'package:background_activity_recognition_with_database/screens/navigator_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/reset_passworrd_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/signup_screen.dart';
+import 'package:lifespark/screens/navigator_screen.dart';
+import 'package:lifespark/screens/reset_passworrd_screen.dart';
+import 'package:lifespark/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

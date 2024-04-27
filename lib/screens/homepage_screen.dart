@@ -1,9 +1,12 @@
-import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
+import 'package:lifespark/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../services/activity_database_helper.dart';
+import '../widgets/app_carousel_card.dart';
+import '../widgets/health_tip_card_widget.dart';
+import '../widgets/sleep_duration_Card.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -49,51 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
     print(statuses[Permission.activityRecognition]);
   }
 
-  // Function to build a tip card with full-screen height
-  Widget _buildTipCard(String tip) {
-    return Container(
-      // Set full screen height with some padding (outer container)
-      height: MediaQuery.of(context).size.height -
-          kToolbarHeight -
-          kBottomNavigationBarHeight -
-          32.0, // Adjust padding
-      margin: const EdgeInsets.all(24.0), // Padding for outer container
-      decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular(16.0), // Border radius for outer container
-        color:
-            Colors.teal.shade100, // Light teal background for outer container
-        boxShadow: [
-          BoxShadow(
-            color: Colors.teal.shade100, // Subtle shadow
-            blurRadius: 1.0, // Blur radius
-            spreadRadius: 1.0, // Spread radius
-          ),
-        ],
-      ),
-      child: Padding(
-        // Add padding around the content
-        padding: const EdgeInsets.all(24.0), // Adjust padding for inner content
-        child: Container(
-          // Transparent container for inner content
-          decoration: BoxDecoration(
-            color: Colors
-                .transparent, // Remove background color for inner container
-          ),
-          child: Center(
-            child: Text(
-              tip,
-              style: TextStyle(
-                fontSize: 20.0, // Increase text size
-                color: Colors.teal.shade900, // Dark teal text
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,13 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],// App bar color,
       ),
-      body: Center(
-        child: SizedBox(
-          height: 500.0,
+      body: Column(
+        children: [
+          SizedBox(
+          height: 300.0,
           child: CarouselSlider(
-            items: _tipList.map((tip) => _buildTipCard(tip)).toList(),
+            items: _tipList.map((tip) => HealthTipCard( tip: tip,)).toList(),
             options: CarouselOptions(
-              height: 500.0, // Set carousel height
+              height: 300.0, // Set carousel height
               viewportFraction: 1, // Show 80% of each card
               enableInfiniteScroll: true, // Loop through tips
               autoPlay: true, // Automatic rotation
@@ -131,6 +90,24 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
+          FutureBuilder<int>(
+            future: DatabaseHelper.getLastDaySleepingDuration(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                final sleepDuration = snapshot.data ?? 0;
+                return SleepDurationCard(sleepDuration: sleepDuration);
+              }
+            },
+          ),
+          SizedBox(
+            height: 250.0,
+            child: AppCarouselCard(),
+          ),
+        ],
       ),
     );
   }

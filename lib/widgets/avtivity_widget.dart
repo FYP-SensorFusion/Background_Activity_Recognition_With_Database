@@ -33,7 +33,7 @@ class ActivityWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    activity.type.toString().split('.').last,
+                    activity.type,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
