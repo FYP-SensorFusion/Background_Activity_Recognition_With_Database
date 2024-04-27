@@ -1,4 +1,4 @@
-name: background_bctivity_recognition_with_database
+name: background_activity_recognition_with_database
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.18.0
   firebase_core: ^2.30.1
   firebase_auth: ^4.19.4
+  carousel_slider: ^4.2.1  # Replace with the latest version if needed
 
 dev_dependencies:
   flutter_test:
