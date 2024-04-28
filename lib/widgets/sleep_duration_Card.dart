@@ -44,8 +44,7 @@ import '../utils.dart';
               Text(
                 message,
                 style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
               ),
@@ -56,6 +55,7 @@ import '../utils.dart';
                     : "You slept only $durationHours.",
                 style: const TextStyle(
                   fontSize: 18.0,
+                  fontWeight: FontWeight.normal,
                   color: Colors.white,
                 ),
               ),

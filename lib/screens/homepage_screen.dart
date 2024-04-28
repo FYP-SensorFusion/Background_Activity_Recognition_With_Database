@@ -107,7 +107,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _changeTip(); // Start tip carousel on load
   }
 
-
   void _changeTip() async {
     await Future.delayed(const Duration(seconds: 5));
     setState(() {
@@ -130,11 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Life Spark",
-          style: TextStyle(
-              fontSize: 24.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'Pacifico'),
-        ), // Use widget.title for app name
+        title: const Text("Life Spark"),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(

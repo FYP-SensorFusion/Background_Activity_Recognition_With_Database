@@ -96,7 +96,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
                   'Most Used Apps',
                   style: TextStyle(
                     fontSize: 24.0,
-                    color: Colors.deepPurple,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -156,7 +156,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             style: TextStyle(
               fontSize: 18.0,
               color: Colors.white,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.normal,
             ),
           ),
           const SizedBox(height: 8.0), // Add some spacing
