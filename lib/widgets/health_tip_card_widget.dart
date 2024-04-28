@@ -44,7 +44,7 @@ class HealthTipCard extends StatelessWidget {
                     'Health Tips',
                     style: TextStyle(
                       fontSize: 24.0,
-                      color: Colors.deepPurple,
+                      color: Colors.orange,
                     ),
 
                   ),

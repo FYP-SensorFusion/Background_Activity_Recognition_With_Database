@@ -79,7 +79,6 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                opacity: 0.6,
                 image: AssetImage("assets/images/purple-sky.png"),
                 fit: BoxFit.fill,
               ),
@@ -96,7 +95,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
                   'Most Used Apps',
                   style: TextStyle(
                     fontSize: 24.0,
-                    color: Colors.deepPurple,
+                    color: Colors.orange,
                   ),
                 ),
               ],
