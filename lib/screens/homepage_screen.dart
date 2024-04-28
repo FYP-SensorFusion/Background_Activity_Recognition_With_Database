@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lifespark/screens/activities_screen.dart';
 import 'package:lifespark/screens/activity_report_screen.dart';
 import 'package:lifespark/screens/profile_screen.dart';
@@ -107,7 +108,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _changeTip(); // Start tip carousel on load
   }
 
-
   void _changeTip() async {
     await Future.delayed(const Duration(seconds: 5));
     setState(() {
@@ -130,11 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "LIFE SPARK",
-          style: TextStyle(
-              fontSize: 24.0, color: Colors.amberAccent, fontWeight: FontWeight.bold, fontFamily: 'Lucida Handwriting'),
-        ), // Use widget.title for app name
+        title: const Text("Life Spark"),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -148,10 +144,11 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
+              FirebaseAuth.instance.signOut().then((value) {
+                print("Signed Out");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignInScreen()));
+              });
             },
           ),
         ], // App bar color,
