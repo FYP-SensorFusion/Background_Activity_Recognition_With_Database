@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lifespark/screens/show_anxiety_report.dart';
 import 'package:lifespark/screens/show_depression_api_report.dart';
@@ -84,10 +85,11 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInScreen()),
-                );
+                FirebaseAuth.instance.signOut().then((value) {
+                  print("Signed Out");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()));
+                });
               },
             ),
           ],
