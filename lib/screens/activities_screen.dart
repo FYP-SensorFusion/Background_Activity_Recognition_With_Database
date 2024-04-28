@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lifespark/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/activity_model.dart';
@@ -32,10 +33,11 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
+              FirebaseAuth.instance.signOut().then((value) {
+                print("Signed Out");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignInScreen()));
+              });
             },
           ),
         ],
