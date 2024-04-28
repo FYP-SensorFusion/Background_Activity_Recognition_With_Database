@@ -63,7 +63,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           kToolbarHeight -
           kBottomNavigationBarHeight -
           32.0,
-      margin: const EdgeInsets.all(24.0),
+      margin: const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 24),
       decoration: BoxDecoration(
         image: const DecorationImage(
           opacity: 0.6,
@@ -79,7 +79,6 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               image: const DecorationImage(
-                opacity: 0.6,
                 image: AssetImage("assets/images/purple-sky.png"),
                 fit: BoxFit.fill,
               ),
@@ -96,7 +95,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
                   'Most Used Apps',
                   style: TextStyle(
                     fontSize: 24.0,
-                    color: Colors.black,
+                    color: Colors.orange,
                   ),
                 ),
               ],
@@ -156,7 +155,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             style: TextStyle(
               fontSize: 18.0,
               color: Colors.white,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8.0), // Add some spacing

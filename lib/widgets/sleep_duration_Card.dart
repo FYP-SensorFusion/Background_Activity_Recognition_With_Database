@@ -19,7 +19,7 @@ import '../utils.dart';
       final durationHours = formatDuration(sleepDuration); // Convert minutes to hours
 
       return Container(
-        height: 150.0,
+        height: 200,
         margin: const EdgeInsets.symmetric(horizontal: 24.0),
         decoration: BoxDecoration(
           image: const DecorationImage(
