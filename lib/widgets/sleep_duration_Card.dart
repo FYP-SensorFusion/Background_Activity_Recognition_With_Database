@@ -11,7 +11,7 @@ import '../utils.dart';
 
     @override
     Widget build(BuildContext context) {
-      final isGoodSleep = sleepDuration > 420;
+      final isGoodSleep = sleepDuration >= 420;
       final message = isGoodSleep
           ? "You had a good night's sleep!"
           : "Consider getting more rest tonight.";
