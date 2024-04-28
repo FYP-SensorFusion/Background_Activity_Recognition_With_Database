@@ -51,7 +51,7 @@ class DatabaseHelper {
       Map<String, dynamic> item = maps[i];
       // print('Date string from database: ${item['date']}');
       return AnxietyModel.fromJson(item);
-    });
+    }).reversed.toList();;
   }
 
   static Future<List<DepressionModel>> getAllDepressionScores() async {
@@ -62,7 +62,7 @@ class DatabaseHelper {
       Map<String, dynamic> item = maps[i];
       // print('Date string from database: ${item['date']}');
       return DepressionModel.fromJson(item);
-    });
+    }).reversed.toList();;
   }
 
   static Future<List<DepressionApiModel>> getAllDepressionApiScores() async {
@@ -77,6 +77,6 @@ class DatabaseHelper {
       Map<String, dynamic> item = maps[i];
       // print('Date string from database: ${item['date']}');
       return DepressionApiModel.fromJson(item);
-    });
+    }).reversed.toList();
   }
 }

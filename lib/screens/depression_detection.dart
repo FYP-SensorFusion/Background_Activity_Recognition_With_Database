@@ -2,6 +2,8 @@ import 'package:lifespark/models/depression_detection_model.dart';
 import 'package:lifespark/services/anxiety_depression_database_helper.dart';
 import 'package:flutter/material.dart';
 
+import '../color_utils.dart';
+
 class DepressionDetection extends StatefulWidget {
   @override
   _DepressionDetectionState createState() => _DepressionDetectionState();
@@ -27,7 +29,8 @@ class _DepressionDetectionState extends State<DepressionDetection> {
   void initState() {
     super.initState();
     currentQuestionIndex = 0; // Initialize currentQuestionIndex
-    depressionScores = List.filled(questions.length, null); // Initialize depressionScores
+    depressionScores =
+        List.filled(questions.length, null); // Initialize depressionScores
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showTestDialog(context);
     });
@@ -41,7 +44,15 @@ class _DepressionDetectionState extends State<DepressionDetection> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Depression Test'),
+              title: Text(
+                'PHQ-9 Depression Test',
+                style: TextStyle(
+                  color: hexStringToColor(
+                      "FFFFFF"), // Change this to your desired color
+                  fontFamily:
+                      'SansSerif', // Change this to your desired font family
+                ),
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -95,10 +106,10 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                         ElevatedButton(
                           onPressed: currentQuestionIndex > 0
                               ? () {
-                            setState(() {
-                              currentQuestionIndex--;
-                            });
-                          }
+                                  setState(() {
+                                    currentQuestionIndex--;
+                                  });
+                                }
                               : null,
                           child: Text('Back'),
                         ),
@@ -109,54 +120,84 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                      'Please select an answer before proceeding.'),
+                                      'Please select an answer before proceeding.',
+                                    style: TextStyle(
+                                      color: hexStringToColor(
+                                          "FFFFFF"), // Change this to your desired color
+                                      fontFamily:
+                                      'SansSerif', // Change this to your desired font family
+                                    ),),
                                 ),
                               );
-                            } else
-                            if (currentQuestionIndex < questions.length - 1) {
+                            } else if (currentQuestionIndex <
+                                questions.length - 1) {
                               setState(() {
                                 currentQuestionIndex++;
                               });
                             } else {
-                              double score = depressionScores.reduce((a,
-                                  b) => a! + b!) ?? 0.0;
+                              double score =
+                                  depressionScores.reduce((a, b) => a! + b!) ??
+                                      0.0;
                               String result;
                               if (score < 5) {
-                                result = "You do not have depression";
+                                result = "Minimal depression";
                               } else if (score < 10) {
-                                result = "You have mild depression";
+                                result = "Mild depression";
                               } else if (score < 15) {
-                                result = "You have moderate depression";
+                                result = "Moderate depression";
                               } else if (score < 20) {
-                                result =
-                                "You have moderately severe depression";
+                                result = "Moderately severe depression";
                               } else {
-                                result = "You have severe depression.";
+                                result = "Severe depression.";
                               }
                               Navigator.pop(context);
 
                               DepressionModel depressionModel = DepressionModel(
                                   date: DateTime.now(),
                                   depressionScore: score,
-                                  depressionDescription: result
-                              );
-                              DatabaseHelper.addDepressionScore(depressionModel);
+                                  depressionDescription: result);
+                              DatabaseHelper.addDepressionScore(
+                                  depressionModel);
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text('Test Result'),
+                                    title: Text('PHQ-9 Test Result',
+                                      style: TextStyle(
+                                        color: hexStringToColor(
+                                            "FFFFFF"), // Change this to your desired color
+                                        fontFamily:
+                                        'SansSerif', // Change this to your desired font family
+                                      ),),
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('Your score is $score.'),
-                                          Text(result),
+                                          Text('score: $score.',
+                                            style: TextStyle(
+                                              color: hexStringToColor(
+                                                  "FFFFFF"), // Change this to your desired color
+                                              fontFamily:
+                                              'SansSerif', // Change this to your desired font family
+                                            ),),
+                                          Text(result,
+                                            style: TextStyle(
+                                              color: hexStringToColor(
+                                                  "FFFFFF"), // Change this to your desired color
+                                              fontFamily:
+                                              'SansSerif', // Change this to your desired font family
+                                            ),),
                                         ],
                                       ),
                                     ),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text('OK'),
+                                        child: Text('OK',
+                                          style: TextStyle(
+                                            color: hexStringToColor(
+                                                "FFFFFF"), // Change this to your desired color
+                                            fontFamily:
+                                            'SansSerif', // Change this to your desired font family
+                                          ),),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
@@ -205,10 +246,7 @@ class ResultScreen extends StatelessWidget {
   final double score;
   final String result;
 
-  ResultScreen(
-      {Key? key,
-        required this.score,
-        required this.result})
+  ResultScreen({Key? key, required this.score, required this.result})
       : super(key: key);
 
   @override
