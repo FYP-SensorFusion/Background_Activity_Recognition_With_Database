@@ -3,6 +3,7 @@ import 'package:lifespark/screens/show_anxiety_report.dart';
 import 'package:lifespark/screens/show_depression_api_report.dart';
 import 'package:lifespark/screens/show_depression_report.dart';
 import 'package:lifespark/screens/signin_screen.dart';
+import 'package:lifespark/widgets/reusable_widget.dart';
 import '../models/anxiety_detection_model.dart';
 import '../models/depression_detection_api_model.dart';
 import 'package:http/http.dart' as http;
@@ -92,12 +93,11 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
           ],
         ),
         body: Container(
-          width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/black-1.png"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
           ),
           child: SingleChildScrollView(
@@ -107,35 +107,13 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(bottom: 15.0),
-                    child: Text(
+                      margin: EdgeInsets.all(20.0)
+                  ),
+                  reusableTextField(
                       'Tell us about your day?',
-                      style: TextStyle(
-                        fontSize: 24, // Change this to your desired size
-                        color: Colors
-                            .lightBlue, // Change this to your desired color
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  TextField(
-                    controller: TextEditingController(text: userInput),
-                    onChanged: (value) {
-                      userInput = value;
-                    },
-                    decoration: InputDecoration(
-                      fillColor:
-                          Colors.white10, // Change this to your desired color
-                      filled: true,
-                      suffixIcon: IconButton(
-                        onPressed: () => setState(() => userInput = ''),
-                        icon: Icon(Icons.clear),
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: Colors.white, // Change this to your desired color
-                    ),
-                  ),
+                      Icons.lightbulb_sharp,
+                      false,
+                      TextEditingController(text: userInput)),
                   TextButton(
                     child: Text(
                       'Submit',
@@ -164,17 +142,21 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  ElevatedButton(
-                    child: Text(showDepressionApiRecords
-                        ? 'Hide Daily Reports'
-                        : 'Show Daily Reports'),
-                    onPressed: () {
-                      setState(() {
-                        showDepressionApiRecords = !showDepressionApiRecords;
-                      });
-                    },
+                  Container(
+                    child: ElevatedButton(
+                      child: Text(showDepressionApiRecords
+                          ? 'Hide Daily Reports'
+                          : 'Show Daily Reports'),
+                      onPressed: () {
+                        setState(() {
+                          showDepressionApiRecords = !showDepressionApiRecords;
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(height: 20), // Add space
                   showDepressionApiRecords ? DepressionApiList() : Container(),
+                  SizedBox(height: 20), // Add space
                   ElevatedButton(
                     child: Text(showDepressionRecords
                         ? 'Hide Depression Reports'
@@ -185,7 +167,9 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       });
                     },
                   ),
+                  SizedBox(height: 20), // Add space
                   showDepressionRecords ? DepressionList() : Container(),
+                  SizedBox(height: 20), // Add space
                   ElevatedButton(
                     child: Text(showAnxietyRecords
                         ? 'Hide Anxiety Reports'
@@ -196,6 +180,8 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       });
                     },
                   ),
+                  SizedBox(height: 20), // Add space
+                  showAnxietyRecords ? AnxietyList() : Container(),
                   showAnxietyRecords ? AnxietyList() : Container(),
                 ],
               ),
