@@ -16,29 +16,73 @@ class DepressionList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return ListView(
+          return GridView.count(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
+            crossAxisCount: 2, // Number of columns
+            childAspectRatio: 1, // Aspect ratio of the cards
             children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Depression Reports',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: hexStringToColor("EAC1FF"))),
-                ),
-              ),
               ...snapshot.data!.map((report) {
                 String formattedDate =
                     DateFormat('yyyy-MM-dd').format(report.date);
                 return Card(
                   child: ListTile(
-                    title: Text(
-                        'Date: $formattedDate\nScore: ${report.depressionScore}\nDescription: ${report.depressionDescription}',
-                        style:
-                            TextStyle(fontSize: 12, fontFamily: 'MySansSerif')),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 10),
+                        Text(
+                          'Date:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'PHQ-9 Score:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          ' ${report.depressionScore}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Description:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          '${report.depressionDescription}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }).toList(),

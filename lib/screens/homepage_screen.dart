@@ -1,6 +1,7 @@
 import 'package:lifespark/screens/activities_screen.dart';
 import 'package:lifespark/screens/activity_report_screen.dart';
 import 'package:lifespark/screens/profile_screen.dart';
+import 'package:lifespark/screens/questionnaire_intro.dart';
 import 'package:lifespark/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -82,24 +83,30 @@ class _MyHomePageState extends State<MyHomePage> {
     requestPermissions();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (await hasTwoWeeksPassedSinceLastTest()) {
+        // Show the bi-weekly questionnaire dialog
+        await showBiWeeklyQuestionnaire(context);
+        // After the dialog is dismissed, start the AnxietyDetection screen
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => AnxietyDetection(
-                    onTestFinished: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DepressionDetection()),
-                      );
-                      saveTestDate();
-                    },
-                  )),
+            builder: (context) => AnxietyDetection(
+              onTestFinished: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DepressionDetection(),
+                  ),
+                );
+                saveTestDate();
+              },
+            ),
+          ),
         );
       }
     });
-    // _changeTip(); // Start tip carousel on load
+    _changeTip(); // Start tip carousel on load
   }
+
 
   void _changeTip() async {
     await Future.delayed(const Duration(seconds: 5));

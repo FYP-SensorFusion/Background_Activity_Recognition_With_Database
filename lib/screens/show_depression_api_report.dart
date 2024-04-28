@@ -16,29 +16,73 @@ class DepressionApiList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return ListView(
+          return GridView.count(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
+            crossAxisCount: 2, // Number of columns
+            childAspectRatio: 0.9, // Aspect ratio of the cards
             children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Depression Records',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: hexStringToColor("EAC1FF"))),
-                ),
-              ),
               ...snapshot.data!.map((report) {
                 String formattedDate =
-                    DateFormat('yyyy-MM-dd').format(report.date);
+                DateFormat('yyyy-MM-dd').format(report.date);
                 return Card(
                   child: ListTile(
-                    subtitle: Text(
-                        'Date: $formattedDate\nDescription: ${report.description}\nResult: ${report.result}',
-                        style:
-                            TextStyle(fontSize: 12, fontFamily: 'MySansSerif')),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 10),
+                        Text(
+                          'Date:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Result:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          ' ${report.result}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Description:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                        Text(
+                          '${report.description}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[150],
+                            fontFamily: 'MySansSerif',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }).toList(),
