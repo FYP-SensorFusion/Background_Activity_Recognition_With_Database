@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
           children: [
             SizedBox(
-              height: 250.0,
+              height: 250,
               child: CarouselSlider(
                 items: _tipList
                     .map((tipData) => HealthTipCard(
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )) // Access icon from map                      ))
                     .toList(),
                 options: CarouselOptions(
-                  height: 275.0, // Set carousel height
+                  height: 250, // Set carousel height
                   viewportFraction: 1, // Show 80% of each card
                   enableInfiniteScroll: true, // Loop through tips
                   autoPlay: true, // Automatic rotation
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             SizedBox(
-              height: 250.0,
+              height: 250,
               child: AppCarouselCard(),
             ),
           ],
