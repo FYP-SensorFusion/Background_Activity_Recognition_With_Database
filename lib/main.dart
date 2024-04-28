@@ -86,6 +86,7 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,  // Add this line
       title: 'Flutter Background Activity Recognition',
       theme: ThemeData(
         brightness: Brightness.dark,
