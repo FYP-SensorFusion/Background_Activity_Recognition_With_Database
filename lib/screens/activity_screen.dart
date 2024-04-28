@@ -31,7 +31,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var white;
+    final _activityTypes = [
+      "IN_VEHICLE",
+      "ON_BICYCLE",
+      "RUNNING",
+      "STILL",
+      "WALKING",
+      "SLEEPING",
+    ];
+    String _selectedActivityType = "STILL";
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,32 +81,41 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: TextFormField(
-                  controller: typeController,
-                  maxLines: 1,
-                  decoration: const InputDecoration(
-                    hintText: 'Type',
-                    labelText: 'Activity Type',
-                    hintStyle: TextStyle(color: Colors.white), // White hint
-                    labelStyle: TextStyle(color: Colors.white),
-                    fillColor: Colors.blueGrey, // Light grey fill color
-                    filled: true, // White label
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 0.75,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
+              DropdownButtonFormField<String>(
+
+                value: _selectedActivityType,
+                hint: Text('Select Activity'),
+                items: _activityTypes
+                    .map((activityType) => DropdownMenuItem<String>(
+                          value: activityType,
+                          child: Text(
+                            activityType,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedActivityType = value!;
+                  });
+                },
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  border: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey[400]!, width: 0.75),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
+                padding: const EdgeInsets.symmetric(vertical: 40.0),
                 child: TextField(
                   controller: durationController,
                   keyboardType: TextInputType.number, // Numeric input
