@@ -188,7 +188,14 @@ class _DepressionDetectionState extends State<DepressionDetection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Depression Test'),
+        title: const Text('Depression Test'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
       ),
     );
   }

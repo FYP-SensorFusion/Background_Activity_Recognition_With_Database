@@ -47,6 +47,7 @@ dependencies:
   usage_stats: 1.2.0
   shared_preferences: any
   path_provider: any
+  google_fonts: ^6.2.1
   http:
 
 dev_dependencies:

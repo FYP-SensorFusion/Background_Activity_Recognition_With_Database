@@ -1,8 +1,10 @@
+import 'package:lifespark/screens/activities_screen.dart';
+import 'package:lifespark/screens/activity_report_screen.dart';
+import 'package:lifespark/screens/profile_screen.dart';
 import 'package:lifespark/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../check_date.dart';
 import '../services/activity_database_helper.dart';
 import '../widgets/app_carousel_card.dart';
@@ -84,7 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Life Spark"), // Use widget.title for app name
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(

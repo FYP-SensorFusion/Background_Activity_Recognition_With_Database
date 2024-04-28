@@ -20,7 +20,13 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
         appBar: AppBar(
           title: const Text('Activities'),
           centerTitle: true,
-          backgroundColor: Colors.teal, // App bar color,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/purple-sky.png'),
+                  fit: BoxFit.fill),
+            ),
+          ),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -98,12 +104,9 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
                   itemCount: snapshot.data!.length,
                 );
               }
-              return const Center(
-                child: Text('No notes yet'),
-              );
-            }
-            return const SizedBox.shrink();
-          },
+              return const SizedBox.shrink();
+            },
+          ),
         ));
   }
 }

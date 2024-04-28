@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:usage_stats/usage_stats.dart';
 
 Future<void> main() async {
@@ -77,12 +78,20 @@ Future<bool> _arePermissionsGranted() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    final textTheme = Theme.of(context).textTheme;
+
     return MaterialApp(
       title: 'Flutter Background Activity Recognition',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+          bodyMedium: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
+        ),
       ),
       home: SignInScreen(),
       // home: AppCarouselCard(),
