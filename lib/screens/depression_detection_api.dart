@@ -93,6 +93,7 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
           ],
         ),
         body: Container(
+          width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
