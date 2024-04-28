@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
     },
     {
       'tip':
-          "Practice mindfulness meditation for 5 minutes to reduce stress and anxiety.",
+          "Engage in 5 minutes of mindfulness meditation to find calmness and reduce stress.",
       'icon': Icons.psychology
     },
     {
@@ -47,22 +47,22 @@ class _MyHomePageState extends State<MyHomePage> {
     },
     {
       'tip':
-          "Get some sunlight exposure to regulate your sleep cycle and improve mood.",
+          "Aim for some sunlight exposure in the morning to regulate your sleep cycle and boost your mood.",
       'icon': Icons.sunny
     },
     {
       'tip':
-          "Eat a balanced diet rich in fruits, vegetables, and whole grains for sustained energy.",
+          "For sustained energy, enjoy a balanced diet packed with fruits, vegetables, and whole grains. ",
       'icon': Icons.food_bank
     },
     {
       'tip':
-          "Listen to calming music or nature sounds to reduce stress and improve sleep quality.",
+          "Improve your sleep quality and reduce stress by listening to calming music or nature sounds.",
       'icon': Icons.music_note
     },
     {
       'tip':
-          "Take deep breaths throughout the day to promote relaxation and focus.",
+          "Remember to take deep breaths throughout the day to promote calmness and focus.",
       'icon': Icons.wind_power
     },
     {
@@ -131,9 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Life Spark",
+          "LIFE SPARK",
           style: TextStyle(
-              fontSize: 24.0, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'Pacifico'),
+              fontSize: 24.0, color: Colors.amberAccent, fontWeight: FontWeight.bold, fontFamily: 'Lucida Handwriting'),
         ), // Use widget.title for app name
         centerTitle: true,
         flexibleSpace: Container(
@@ -158,7 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/black-1.png"),
@@ -166,9 +165,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
           children: [
             SizedBox(
-              height: 300.0,
+              height: 250.0,
               child: CarouselSlider(
                 items: _tipList
                     .map((tipData) => HealthTipCard(
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )) // Access icon from map                      ))
                     .toList(),
                 options: CarouselOptions(
-                  height: 300.0, // Set carousel height
+                  height: 275.0, // Set carousel height
                   viewportFraction: 1, // Show 80% of each card
                   enableInfiniteScroll: true, // Loop through tips
                   autoPlay: true, // Automatic rotation
