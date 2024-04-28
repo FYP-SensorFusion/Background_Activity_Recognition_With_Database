@@ -1,5 +1,4 @@
 // database_helper.dart
-import 'package:flutter_activity_recognition/models/activity_type.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -42,7 +41,7 @@ class DatabaseHelper {
   static Future<ActivityModel?> getLastUpdatedActivity() async {
     final db = await _getDB();
     final List<Map<String, dynamic>> rows =
-    await db.query("Activity", orderBy: 'lastUpdatedTime DESC', limit: 1);
+        await db.query("Activity", orderBy: 'lastUpdatedTime DESC', limit: 1);
 
     if (rows.isEmpty) {
       return null;
@@ -50,14 +49,20 @@ class DatabaseHelper {
     return ActivityModel.fromJson(rows.first);
   }
 
-  static Future<List<ActivityModel>?> getAllActivities() async {
+  static Future<List<ActivityModel>?> getLastDayActivities() async {
     final db = await _getDB();
+    final now = DateTime.now();
+    final lastdate = now.subtract(Duration(days: 1));
 
     // Order by latest end time (assuming a field named 'endTime' exists)
     final List<Map<String, dynamic>> maps = await db.query(
       "Activity",
-      where: 'type != ?',
-      whereArgs: [ActivityType.UNKNOWN.toString()],
+      where: 'type != ? AND startTime >= ? AND startTime < ?',
+      whereArgs: [
+        "UNKNOWN",
+        lastdate.toIso8601String(),
+        now.toIso8601String(),
+      ],
       orderBy: 'startTime DESC',
     );
     if (maps.isEmpty) {
@@ -68,11 +73,30 @@ class DatabaseHelper {
         maps.length, (index) => ActivityModel.fromJson(maps[index]));
   }
 
-  static Future<Map<String, int>> getActivitiesforGivenDuration(
+  static Future<int> getLastDaySleepingDuration() async {
+    final db = await _getDB();
+    final now = DateTime.now();
+    final lastDate = now.subtract(Duration(days: 1));
+
+    final result = await db.rawQuery('''
+    SELECT SUM(duration) AS total_duration
+    FROM Activity
+    WHERE type = ? AND startTime >= ? AND startTime < ?
+  ''', [
+      "SLEEPING",
+      lastDate.toIso8601String(),
+      now.toIso8601String(),
+    ]);
+
+    final totalDuration = result.first['total_duration'] as int?;
+    return totalDuration ?? 0; // Return 0 if result is null
+  }
+
+  static Future<Map<String, int>> getActivitiesForGivenDuration(
       int duration) async {
     final db = await _getDB();
     final now = DateTime.now();
-    final lastWeekStart = now.subtract(Duration(days: duration));
+    final lastdate = now.subtract(Duration(days: duration));
 
     final maps = await db.rawQuery('''
       SELECT type, SUM(duration) AS total_duration
@@ -80,8 +104,8 @@ class DatabaseHelper {
       WHERE type != ? AND startTime >= ? AND startTime < ?
       GROUP BY type
     ''', [
-      ActivityType.UNKNOWN.toString(),
-      lastWeekStart.toIso8601String(),
+      "UNKNOWN",
+      lastdate.toIso8601String(),
       now.toIso8601String(),
     ]);
     return Map.fromIterable(maps,
@@ -97,7 +121,7 @@ class DatabaseHelper {
     FROM Activity
     WHERE type != ?
     GROUP BY type
-  ''', [ActivityType.UNKNOWN.toString()]);
+  ''', ["UNKNOWN"]);
 
     return Map.fromIterable(maps,
         key: (item) => item['type'] as String,

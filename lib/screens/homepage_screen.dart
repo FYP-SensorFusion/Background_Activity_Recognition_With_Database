@@ -1,15 +1,17 @@
-import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/profile_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
+import 'package:lifespark/screens/activities_screen.dart';
+import 'package:lifespark/screens/activity_report_screen.dart';
+import 'package:lifespark/screens/profile_screen.dart';
+import 'package:lifespark/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import 'package:background_activity_recognition_with_database/screens/anxiety_detection.dart';
-import 'package:background_activity_recognition_with_database/screens/depression_detection.dart';
-
 import '../check_date.dart';
+import '../services/activity_database_helper.dart';
+import '../widgets/app_carousel_card.dart';
+import '../widgets/health_tip_card_widget.dart';
+import '../widgets/sleep_duration_Card.dart';
+import 'anxiety_detection.dart';
+import 'depression_detection.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -22,11 +24,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _tipList = [
-    "Take a brisk 10-minute walk to boost your mood and energy levels.",
-    "Drink plenty of water throughout the day to stay hydrated and focused.",
-    "Practice mindfulness meditation for 5 minutes to reduce stress and anxiety.",
-    "Stretch your body for 5-10 minutes to improve flexibility and relieve tension.",
-    "Get some sunlight exposure to regulate your sleep cycle and improve mood.",
+    {'tip': "Take a brisk 10-minute walk to boost your mood and energy levels.", 'icon': Icons.directions_walk},
+    {'tip': "Drink plenty of water throughout the day to stay hydrated and focused.", 'icon': Icons.local_drink},
+    {'tip': "Practice mindfulness meditation for 5 minutes to reduce stress and anxiety.", 'icon': Icons.psychology},
+    {'tip': "Stretch your body for 5-10 minutes to improve flexibility and relieve tension.", 'icon': Icons.accessibility},
+    {'tip': "Get some sunlight exposure to regulate your sleep cycle and improve mood.", 'icon': Icons.sunny},
+    {'tip': "Eat a balanced diet rich in fruits, vegetables, and whole grains for sustained energy.", 'icon': Icons.food_bank},
+    {'tip': "Listen to calming music or nature sounds to reduce stress and improve sleep quality.", 'icon': Icons.music_note},
+    {'tip': "Take deep breaths throughout the day to promote relaxation and focus.", 'icon': Icons.wind_power},
+    {'tip': "Limit screen time before bed to promote better sleep hygiene.", 'icon': Icons.nights_stay},
+    {'tip': "Spend time in nature to reduce stress and improve mental well-being.", 'icon': Icons.park},
   ];
   int _currentTipIndex = 0;
 
@@ -73,56 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
     print(statuses[Permission.activityRecognition]);
   }
 
-  // Function to build a tip card with full-screen height
-  Widget _buildTipCard(String tip) {
-    return Container(
-      // Set full screen height with some padding (outer container)
-      height: MediaQuery.of(context).size.height -
-          kToolbarHeight -
-          kBottomNavigationBarHeight -
-          32.0, // Adjust padding
-      margin: const EdgeInsets.all(24.0), // Padding for outer container
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          opacity: 0.6,
-          image: AssetImage("assets/images/purple-sky.png"),
-          fit: BoxFit.fill,
-        ),
-        borderRadius:
-            BorderRadius.circular(16.0), // Border radius for outer container
-        // color:
-        //     Colors.teal.shade100, // Light teal background for outer container
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.teal.shade100, // Subtle shadow
-        //     blurRadius: 1.0, // Blur radius
-        //     spreadRadius: 1.0, // Spread radius
-        //   ),
-        // ],
-      ),
-      child: Padding(
-        // Add padding around the content
-        padding: const EdgeInsets.all(24.0), // Adjust padding for inner content
-        child: Container(
-          // Transparent container for inner content
-          decoration: const BoxDecoration(
-            color: Colors
-                .transparent, // Remove background color for inner container
-          ),
-          child: Center(
-            child: Text(
-              tip,
-              style: const TextStyle(
-                fontSize: 20.0, // Increase text size
-                color: Colors.white, // Dark teal text
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,22 +106,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ], // App bar color,
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/black-1.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child: SizedBox(
-            height: 500.0,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 300.0,
             child: CarouselSlider(
-              items: _tipList.map((tip) => _buildTipCard(tip)).toList(),
+              items: _tipList
+                  .map((tipData) => HealthTipCard(
+                  tip: tipData['tip'] as String, // Access tip from map
+                  iconData: tipData['icon'] as IconData,)) // Access icon from map                      ))
+                  .toList(),
               options: CarouselOptions(
-                height: 500.0, // Set carousel height
+                height: 300.0, // Set carousel height
                 viewportFraction: 1, // Show 80% of each card
                 enableInfiniteScroll: true, // Loop through tips
                 autoPlay: true, // Automatic rotation
@@ -175,7 +128,24 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-        ),
+          FutureBuilder<int>(
+            future: DatabaseHelper.getLastDaySleepingDuration(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                final sleepDuration = snapshot.data ?? 0;
+                return SleepDurationCard(sleepDuration: sleepDuration);
+              }
+            },
+          ),
+          SizedBox(
+            height: 250.0,
+            child: AppCarouselCard(),
+          ),
+        ],
       ),
     );
   }

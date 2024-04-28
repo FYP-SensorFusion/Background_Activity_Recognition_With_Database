@@ -1,6 +1,5 @@
-import 'package:background_activity_recognition_with_database/models/depression_detection_model.dart';
+import 'package:lifespark/models/depression_detection_model.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:async';
 

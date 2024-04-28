@@ -1,8 +1,8 @@
-import 'package:background_activity_recognition_with_database/screens/homepage_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/profile_screen.dart';
+import 'package:lifespark/screens/homepage_screen.dart';
+import 'package:lifespark/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:background_activity_recognition_with_database/screens/activities_screen.dart';
-import 'package:background_activity_recognition_with_database/screens/activity_report_screen.dart';
+import 'package:lifespark/screens/activities_screen.dart';
+import 'package:lifespark/screens/activity_report_screen.dart';
 
 class NavigatorPage extends StatefulWidget {
   NavigatorPage({Key? key, required this.title}) : super(key: key);

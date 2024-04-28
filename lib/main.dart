@@ -1,10 +1,11 @@
-import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
-import 'package:background_activity_recognition_with_database/services/activity_recognition_function.dart';
+import 'package:lifespark/screens/signin_screen.dart';
+import 'package:lifespark/services/activity_recognition_function.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:usage_stats/usage_stats.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,12 +57,18 @@ Future<bool> _arePermissionsGranted() async {
     Permission.location,
     Permission.activityRecognition,
   ];
+  final status_usage_stat = await UsageStats.checkUsagePermission()??false;
+
 
   // Check the status of each permission
   for (var permission in permissions) {
     if (await permission.status.isDenied) {
       return false;
     }
+  }
+
+  if(!status_usage_stat){
+    UsageStats.grantUsagePermission();
   }
 
   // If all permissions are granted, return true
@@ -87,6 +94,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SignInScreen(),
+      // home: AppCarouselCard(),
     );
   }
 }

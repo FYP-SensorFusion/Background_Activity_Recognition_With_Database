@@ -11,9 +11,9 @@ Future<void> setupActivityRecognition() async {
 
     ActivityModel? lastActivity = await DatabaseHelper.getLastUpdatedActivity();
 
-    if (lastActivity == null || lastActivity.type != activity.type.toString()) {
+    if (lastActivity == null || lastActivity.type != activity.type.toString().split('.').last) {
       var newActivityModel = ActivityModel(
-        type: activity.type.toString(),
+        type: activity.type.toString().split('.').last,
         startTime: DateTime.now(),
         duration: 0,
         lastUpdatedTime: DateTime.now(),
@@ -21,12 +21,12 @@ Future<void> setupActivityRecognition() async {
       await DatabaseHelper.addActivity(newActivityModel);
     } else {
       final now = DateTime.now();
-      final durationInSeconds = now.difference(lastActivity.startTime).inSeconds.round(); // Round up to seconds
+      final durationInmuinites = now.difference(lastActivity.startTime).inMinutes.round(); // Round up to seconds
       var activityModel = ActivityModel(
         id: lastActivity.id,
         type: lastActivity.type,
         startTime: lastActivity.startTime,
-        duration: durationInSeconds,
+        duration: durationInmuinites,
         lastUpdatedTime: DateTime.now(),
       );
       await DatabaseHelper.updateActivity(activityModel);
