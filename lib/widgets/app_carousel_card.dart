@@ -63,7 +63,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           kToolbarHeight -
           kBottomNavigationBarHeight -
           32.0,
-      margin: const EdgeInsets.all(24.0),
+      margin: const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 24),
       decoration: BoxDecoration(
         image: const DecorationImage(
           opacity: 0.6,

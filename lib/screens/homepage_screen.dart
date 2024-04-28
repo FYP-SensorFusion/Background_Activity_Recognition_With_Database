@@ -158,7 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/black-1.png"),
@@ -166,9 +165,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
           children: [
             SizedBox(
-              height: 300.0,
+              height: 250.0,
               child: CarouselSlider(
                 items: _tipList
                     .map((tipData) => HealthTipCard(
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )) // Access icon from map                      ))
                     .toList(),
                 options: CarouselOptions(
-                  height: 300.0, // Set carousel height
+                  height: 275.0, // Set carousel height
                   viewportFraction: 1, // Show 80% of each card
                   enableInfiniteScroll: true, // Loop through tips
                   autoPlay: true, // Automatic rotation

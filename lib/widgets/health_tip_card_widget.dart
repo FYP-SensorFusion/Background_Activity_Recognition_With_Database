@@ -9,11 +9,7 @@ class HealthTipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height -
-          kToolbarHeight -
-          kBottomNavigationBarHeight -
-          32.0,
-      margin: const EdgeInsets.all(24.0),
+      margin: const EdgeInsets.only(left: 24.0, right: 24, top: 24, bottom: 12),
       decoration: BoxDecoration(
         image: const DecorationImage(
           opacity: 0.6,
@@ -58,7 +54,7 @@ class HealthTipCard extends StatelessWidget {
           ),
           // Tip and icon container with padding
           Padding(
-            padding: const EdgeInsets.only(top: 80.0, left: 24.0, right: 24.0,), // Adjust padding as needed
+            padding: const EdgeInsets.only(top: 70.0, left: 24.0, right: 24.0,), // Adjust padding as needed
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // Align text to left
               children: [
