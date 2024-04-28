@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DepressionApiModel {
   final int? id;
   final DateTime date;
@@ -8,7 +10,7 @@ class DepressionApiModel {
 
   factory DepressionApiModel.fromJson(Map<String, dynamic> json) => DepressionApiModel(
       id: json['id'],
-      date: DateTime.parse(json['date']),
+      date: DateFormat('yyyy-MM-dd').parse(json['date']),
       description: json['description'].toString(),
       result: json['result'].toString()
   );
