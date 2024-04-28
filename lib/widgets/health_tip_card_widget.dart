@@ -15,15 +15,12 @@ class HealthTipCard extends StatelessWidget {
           32.0,
       margin: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          opacity: 0.6,
+          image: AssetImage("assets/images/purple-sky.png"),
+          fit: BoxFit.fill,
+        ),
         borderRadius: BorderRadius.circular(16.0),
-        color: Colors.teal.shade100,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.teal.shade100,
-            blurRadius: 1.0,
-            spreadRadius: 1.0,
-          ),
-        ],
       ),
       child: Stack( // Use Stack for overlapping elements
         children: [
@@ -34,9 +31,12 @@ class HealthTipCard extends StatelessWidget {
             right: 0.0,
             child: Container(
               padding: const EdgeInsets.all(16.0), // Add some padding
-              decoration: BoxDecoration(
-                color: Colors.teal.shade700, // Use a darker teal for contrast
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/purple-sky.png'),
+                    fit: BoxFit.fill),
+                color: Colors.purple, // Use a darker teal for contrast
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
                   topRight: Radius.circular(16.0),
                 ),
@@ -48,7 +48,7 @@ class HealthTipCard extends StatelessWidget {
                     'Health Tips',
                     style: TextStyle(
                       fontSize: 24.0,
-                      color: Colors.white,
+                      color: Colors.deepPurple,
                     ),
 
                   ),
@@ -66,7 +66,7 @@ class HealthTipCard extends StatelessWidget {
                   children: [
                     Icon(
                       iconData,
-                      color: Colors.teal.shade700,
+                      color: Colors.white,
                       size: 48.0, // Adjust icon size as needed
                     ),
                     const SizedBox(width: 16.0), // Add spacing between icon and text
@@ -75,7 +75,7 @@ class HealthTipCard extends StatelessWidget {
                         tip,
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Colors.teal.shade900,
+                          color: Colors.white,
                         ),
                         textAlign: TextAlign.center, // Justify alignment for better text layout
                       ),

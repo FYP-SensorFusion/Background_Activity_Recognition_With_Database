@@ -22,6 +22,11 @@ import '../utils.dart';
         height: 150.0,
         margin: const EdgeInsets.symmetric(horizontal: 24.0),
         decoration: BoxDecoration(
+          image: const DecorationImage(
+            opacity: 0.5,
+            image: AssetImage("assets/images/purple-sky.png"),
+            fit: BoxFit.fill,
+          ),
           borderRadius: BorderRadius.circular(16.0),
           color: isGoodSleep ? Colors.green : Colors.red,
           boxShadow: [
