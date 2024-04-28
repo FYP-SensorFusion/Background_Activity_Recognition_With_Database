@@ -22,11 +22,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _tipList = [
-    "Take a brisk 10-minute walk to boost your mood and energy levels.",
-    "Drink plenty of water throughout the day to stay hydrated and focused.",
-    "Practice mindfulness meditation for 5 minutes to reduce stress and anxiety.",
-    "Stretch your body for 5-10 minutes to improve flexibility and relieve tension.",
-    "Get some sunlight exposure to regulate your sleep cycle and improve mood.",
+    {'tip': "Take a brisk 10-minute walk to boost your mood and energy levels.", 'icon': Icons.directions_walk},
+    {'tip': "Drink plenty of water throughout the day to stay hydrated and focused.", 'icon': Icons.local_drink},
+    {'tip': "Practice mindfulness meditation for 5 minutes to reduce stress and anxiety.", 'icon': Icons.psychology},
+    {'tip': "Stretch your body for 5-10 minutes to improve flexibility and relieve tension.", 'icon': Icons.accessibility},
+    {'tip': "Get some sunlight exposure to regulate your sleep cycle and improve mood.", 'icon': Icons.sunny},
+    {'tip': "Eat a balanced diet rich in fruits, vegetables, and whole grains for sustained energy.", 'icon': Icons.food_bank},
+    {'tip': "Listen to calming music or nature sounds to reduce stress and improve sleep quality.", 'icon': Icons.music_note},
+    {'tip': "Take deep breaths throughout the day to promote relaxation and focus.", 'icon': Icons.wind_power},
+    {'tip': "Limit screen time before bed to promote better sleep hygiene.", 'icon': Icons.nights_stay},
+    {'tip': "Spend time in nature to reduce stress and improve mental well-being.", 'icon': Icons.park},
   ];
   int _currentTipIndex = 0;
 
@@ -99,9 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 300.0,
             child: CarouselSlider(
               items: _tipList
-                  .map((tip) => HealthTipCard(
-                        tip: tip,
-                      ))
+                  .map((tipData) => HealthTipCard(
+                  tip: tipData['tip'] as String, // Access tip from map
+                  iconData: tipData['icon'] as IconData,)) // Access icon from map                      ))
                   .toList(),
               options: CarouselOptions(
                 height: 300.0, // Set carousel height
