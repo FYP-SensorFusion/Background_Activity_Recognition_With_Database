@@ -16,41 +16,48 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          title: const Text('Activities'),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/purple-sky.png'),
-                  fit: BoxFit.fill),
-            ),
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        title: const Text('Activities'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
           ),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInScreen()),
-                );
-              },
-            ),
-          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Navigator.push(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const ActivityScreen()));
-            setState(() {});
-          },
-          child: const Icon(Icons.add),
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ActivityScreen()));
+          setState(() {});
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/black-1.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-        body: FutureBuilder<List<ActivityModel>?>(
+        child: FutureBuilder<List<ActivityModel>?>(
           future: DatabaseHelper.getLastDayActivities(),
           builder: (context, AsyncSnapshot<List<ActivityModel>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -58,55 +65,55 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else if (snapshot.hasData) {
-                return ListView.builder(
-                  itemBuilder: (context, index) => ActivityWidget(
-                    activity: snapshot.data![index],
-                    onTap: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ActivityScreen(
-                                    activity: snapshot.data![index],
-                                  )));
-                      setState(() {});
-                    },
-                    onLongPress: () async {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text(
-                                  'Are you sure you want to delete this note?'),
-                              actions: [
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.red)),
-                                  onPressed: () async {
-                                    await DatabaseHelper.deleteActivity(
-                                        snapshot.data![index]);
-                                    Navigator.pop(context);
-                                    setState(() {});
-                                  },
-                                  child: const Text('Yes'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('No'),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                  ),
-                  itemCount: snapshot.data!.length,
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        );
+              return ListView.builder(
+                itemBuilder: (context, index) => ActivityWidget(
+                  activity: snapshot.data![index],
+                  onTap: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ActivityScreen(
+                                  activity: snapshot.data![index],
+                                )));
+                    setState(() {});
+                  },
+                  onLongPress: () async {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text(
+                                'Are you sure you want to delete this note?'),
+                            actions: [
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red)),
+                                onPressed: () async {
+                                  await DatabaseHelper.deleteActivity(
+                                      snapshot.data![index]);
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                                child: const Text('Yes'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('No'),
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                ),
+                itemCount: snapshot.data!.length,
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
   }
 }
 

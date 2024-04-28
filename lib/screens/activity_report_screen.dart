@@ -52,9 +52,13 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
             ),
             Expanded(
               child: Center(
-                child: Text(showLastmonthActivities
-                    ? 'Last Month Activities'
-                    : 'All Time Activities'),
+                child: Text(
+                  showLastmonthActivities
+                      ? 'Last Month Activities'
+                      : 'All Time Activities',
+                  style: const TextStyle(
+                      color: Colors.white), // White text for title
+                ),
               ),
             ),
             IconButton(
@@ -71,77 +75,108 @@ class _ActivityReportScreenState extends State<ActivityReportScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.teal, // App bar color
       ),
-      body: FutureBuilder<Map<String, int>>(
-        future: activities,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Wrap(
-                spacing: 16.0,
-                runSpacing: 16.0,
-                children: data.entries.map((entry) {
-                  final activityType = entry.key;
-                  final totalDuration = entry.value;
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize:
-                              MainAxisSize.min, // Avoid cards expanding
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center row content
-                              children: [
-                                const Text(
-                                  'Activity Type:',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Text(
-                                  activityType,
-                                  style: const TextStyle(fontSize: 14.0),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 4.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment
-                                  .center, // Center row content
-                              children: [
-                                const Text(
-                                  'Total Duration:',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Text(
-                                  formatDuration(totalDuration),
-                                  style: const TextStyle(fontSize: 14.0),
-                                ),
-                              ],
-                            ),
-                          ],
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/black-1.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: FutureBuilder<Map<String, int>>(
+          future: activities,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final data = snapshot.data!;
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Wrap(
+                  spacing: 16.0,
+                  runSpacing: 16.0,
+                  children: data.entries.map((entry) {
+                    final activityType = entry.key;
+                    final totalDuration = entry.value;
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(10.0), // Add border radius
+                        image: const DecorationImage(
+                          opacity: 0.6,
+                          image: AssetImage("assets/images/purple-sky.png"),
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize:
+                                MainAxisSize.min, // Avoid cards expanding
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Center row content
+                                children: [
+                                  const Text(
+                                    'Activity Type:',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Text(
+                                    activityType,
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .center, // Center row content
+                                children: [
+                                  const Text(
+                                    'Total Duration:',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Text(
+                                    formatDuration(totalDuration),
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors
+                                          .white, // Set text color to white
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

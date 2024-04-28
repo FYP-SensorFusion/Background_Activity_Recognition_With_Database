@@ -23,18 +23,12 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
     getMostUsedApps();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    getMostUsedApps();
-  }
-
   void getMostUsedApps() async {
     try {
       DateTime now = DateTime.now();
       DateTime oneMinuteAgo = now.subtract(Duration(minutes: 1));
       List<AppUsageInfo> infoList =
-      await AppUsage().getAppUsage(oneMinuteAgo, now);
+          await AppUsage().getAppUsage(oneMinuteAgo, now);
       // Sort apps by usage time in descending order
       infoList.sort((a, b) => b.usage.inSeconds - a.usage.inSeconds);
 
@@ -71,15 +65,12 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           32.0,
       margin: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          opacity: 0.6,
+          image: AssetImage("assets/images/purple-sky.png"),
+          fit: BoxFit.fill,
+        ),
         borderRadius: BorderRadius.circular(16.0),
-        color: Colors.teal.shade100,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.teal.shade100,
-            blurRadius: 1.0,
-            spreadRadius: 1.0,
-          ),
-        ],
       ),
       child: Column(
         children: [
@@ -87,7 +78,12 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Colors.teal.shade700, // Use a darker teal for contrast
+              image: const DecorationImage(
+                opacity: 0.6,
+                image: AssetImage("assets/images/purple-sky.png"),
+                fit: BoxFit.fill,
+              ),
+              color: Colors.purple.shade200, // Use a darker teal for contrast
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16.0),
                 topRight: Radius.circular(16.0),
@@ -100,7 +96,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
                   'Most Used Apps',
                   style: TextStyle(
                     fontSize: 24.0,
-                    color: Colors.white,
+                    color: Colors.deepPurple,
                   ),
                 ),
               ],
@@ -108,37 +104,42 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           ),
           // Existing carousel content
           _mostUsedApps.isEmpty
-              ? const Center(child: CircularProgressIndicator())
+              ? const Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : CarouselSlider(
-            items: _mostUsedApps
-                .map((appInfo) => _buildAppCard(appInfo))
-                .toList(),
-            options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.15,
-              // Adjust height as needed
-              viewportFraction: 0.8,
-              // Adjust visibility of each app card
-              enableInfiniteScroll: false,
-              // Since we have 3 apps
-              autoPlay: true,
-              // Enable autoplay
-              autoPlayInterval: Duration(seconds: 3),
-              // Change interval as needed
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              // Adjust animation duration
-              onPageChanged: (index, reason) =>
-                  setState(() => _currentAppIndex = index),
-            ),
-          ),
+                  items: _mostUsedApps
+                      .map((appInfo) => _buildAppCard(appInfo))
+                      .toList(),
+                  options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    // Adjust height as needed
+                    viewportFraction: 0.8,
+                    // Adjust visibility of each app card
+                    enableInfiniteScroll: false,
+                    // Since we have 3 apps
+                    autoPlay: true,
+                    // Enable autoplay
+                    autoPlayInterval: Duration(seconds: 3),
+                    // Change interval as needed
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    // Adjust animation duration
+                    onPageChanged: (index, reason) =>
+                        setState(() => _currentAppIndex = index),
+                  ),
+                ),
         ],
       ),
     );
   }
 
-
   Widget _buildAppCard(AppUsageInfo appInfo) {
     final duration =
-    Duration(seconds: appInfo.usage.inSeconds); // Convert usage to Duration
+        Duration(seconds: appInfo.usage.inSeconds); // Convert usage to Duration
     final index =
         _mostUsedApps.indexOf(appInfo) + 1; // Get app position (1-based)
 
@@ -154,7 +155,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             "#$index ${appInfo.appName}", // Combine position and app name
             style: TextStyle(
               fontSize: 18.0,
-              color: Colors.teal.shade900,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -164,7 +165,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
             // Format duration (minutes and seconds)
             style: TextStyle(
               fontSize: 16.0,
-              color: Colors.teal.shade700,
+              color: Colors.white,
             ),
           ),
         ],

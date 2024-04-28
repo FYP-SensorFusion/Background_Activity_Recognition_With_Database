@@ -57,7 +57,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
               label: 'User Details',
             ),
           ],
-          selectedItemColor: Colors.teal.shade900,
+          selectedItemColor: Colors.purple.shade300,
           unselectedItemColor: Colors.grey),
     );
   }
