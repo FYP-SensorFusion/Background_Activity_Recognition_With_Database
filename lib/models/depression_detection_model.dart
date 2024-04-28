@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class DepressionModel {
   final int? id;
   final DateTime date;
@@ -8,7 +10,7 @@ class DepressionModel {
 
   factory DepressionModel.fromJson(Map<String, dynamic> json) => DepressionModel(
       id: json['id'],
-      date: DateTime.parse(json['date']),
+      date: DateFormat('yyyy-MM-dd').parse(json['date']),
       depressionScore: json['depressionScore'].toDouble(),
       depressionDescription: json['depressionDescription'].toString()
   );

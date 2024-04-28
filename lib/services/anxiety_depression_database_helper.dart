@@ -1,4 +1,3 @@
-import 'package:lifespark/models/depression_detection_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:async';
@@ -42,5 +41,42 @@ class DatabaseHelper {
     final db = await _getDB();
     return await db.insert("DepressionApi", model.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<List<AnxietyModel>> getAllAnxietyScores() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query('Anxiety');
+
+    return List.generate(maps.length, (i) {
+      Map<String, dynamic> item = maps[i];
+      // print('Date string from database: ${item['date']}');
+      return AnxietyModel.fromJson(item);
+    });
+  }
+
+  static Future<List<DepressionModel>> getAllDepressionScores() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query('Depression');
+
+    return List.generate(maps.length, (i) {
+      Map<String, dynamic> item = maps[i];
+      // print('Date string from database: ${item['date']}');
+      return DepressionModel.fromJson(item);
+    });
+  }
+
+  static Future<List<DepressionApiModel>> getAllDepressionApiScores() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'DepressionApi',
+      where: 'result != ?',
+      whereArgs: ['There was an error while processing the content.'],
+    );
+
+    return List.generate(maps.length, (i) {
+      Map<String, dynamic> item = maps[i];
+      // print('Date string from database: ${item['date']}');
+      return DepressionApiModel.fromJson(item);
+    });
   }
 }
