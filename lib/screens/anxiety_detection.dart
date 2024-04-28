@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../color_utils.dart';
 import '../models/anxiety_detection_model.dart';
 import '../services/anxiety_depression_database_helper.dart';
 
@@ -29,7 +30,8 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
   void initState() {
     super.initState();
     currentQuestionIndex = 0; // Initialize currentQuestionIndex
-    anxietyScores = List.filled(questions.length, null); // Initialize anxietyScores
+    anxietyScores =
+        List.filled(questions.length, null); // Initialize anxietyScores
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _showTestDialog(context);
     });
@@ -43,7 +45,15 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Anxiety Test'),
+              title: Text(
+                'GAD-7 Anxiety Test',
+                style: TextStyle(
+                  color: hexStringToColor(
+                      "FFFFFF"), // Change this to your desired color
+                  fontFamily:
+                      'SansSerif', // Change this to your desired font family
+                ),
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -97,65 +107,94 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                         ElevatedButton(
                           onPressed: currentQuestionIndex > 0
                               ? () {
-                            setState(() {
-                              currentQuestionIndex--;
-                            });
-                          }
+                                  setState(() {
+                                    currentQuestionIndex--;
+                                  });
+                                }
                               : null,
                           child: Text('Back'),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (anxietyScores[currentQuestionIndex] ==
-                                null) {
+                            if (anxietyScores[currentQuestionIndex] == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                      'Please select an answer before proceeding.'),
+                                      'Please select an answer before proceeding.',
+                                    style: TextStyle(
+                                      color: hexStringToColor(
+                                          "FFFFFF"), // Change this to your desired color
+                                      fontFamily:
+                                      'SansSerif', // Change this to your desired font family
+                                    ),),
                                 ),
                               );
-                            } else
-                            if (currentQuestionIndex < questions.length - 1) {
+                            } else if (currentQuestionIndex <
+                                questions.length - 1) {
                               setState(() {
                                 currentQuestionIndex++;
                               });
                             } else {
-                              double score = anxietyScores.reduce((a,
-                                  b) => a! + b!) ?? 0.0;
+                              double score =
+                                  anxietyScores.reduce((a, b) => a! + b!) ??
+                                      0.0;
                               String result;
                               if (score < 5) {
-                                result = "You have minimal anxiety";
+                                result = "Minimal anxiety";
                               } else if (score < 10) {
-                                result = "You have mild anxiety";
+                                result = "Mild anxiety";
                               } else if (score < 15) {
-                                result = "You have moderate anxiety";
+                                result = "Moderate anxiety";
                               } else {
-                                result = "You have severe anxiety.";
+                                result = "Severe anxiety.";
                               }
                               Navigator.pop(context);
 
                               AnxietyModel anxietyModel = AnxietyModel(
                                   date: DateTime.now(),
                                   anxietyScore: score,
-                                  anxietyDescription: result
-                              );
+                                  anxietyDescription: result);
                               DatabaseHelper.addAnxietyScore(anxietyModel);
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text('Test Result'),
+                                    title: Text('GAD-7 Test Result',
+                                      style: TextStyle(
+                                        color: hexStringToColor(
+                                            "FFFFFF"), // Change this to your desired color
+                                        fontFamily:
+                                        'SansSerif', // Change this to your desired font family
+                                      ),),
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('Your score is $score.'),
-                                          Text(result),
+                                          Text('score: $score.',
+                                            style: TextStyle(
+                                              color: hexStringToColor(
+                                                  "FFFFFF"), // Change this to your desired color
+                                              fontFamily:
+                                              'SansSerif', // Change this to your desired font family
+                                            ),),
+                                          Text(result,
+                                            style: TextStyle(
+                                              color: hexStringToColor(
+                                                  "FFFFFF"), // Change this to your desired color
+                                              fontFamily:
+                                              'SansSerif', // Change this to your desired font family
+                                            ),),
                                         ],
                                       ),
                                     ),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text('OK'),
+                                        child: Text('OK',
+                                          style: TextStyle(
+                                            color: hexStringToColor(
+                                                "FFFFFF"), // Change this to your desired color
+                                            fontFamily:
+                                            'SansSerif', // Change this to your desired font family
+                                          ),),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           submitTest();
@@ -202,10 +241,7 @@ class ResultScreen extends StatelessWidget {
   final double score;
   final String result;
 
-  ResultScreen(
-      {Key? key,
-        required this.score,
-        required this.result})
+  ResultScreen({Key? key, required this.score, required this.result})
       : super(key: key);
 
   @override

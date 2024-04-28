@@ -3,6 +3,7 @@ import 'package:lifespark/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lifespark/screens/activities_screen.dart';
 import 'package:lifespark/screens/activity_report_screen.dart';
+import 'package:lifespark/screens/depression_detection_api.dart';
 
 class NavigatorPage extends StatefulWidget {
   NavigatorPage({Key? key, required this.title}) : super(key: key);
@@ -20,7 +21,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
     MyHomePage(title: "Life Spark"),
     ActivitiesScreen(), // Replace with your actual screens
     ActivityReportScreen(),
-    ActivityReportScreen(),
+    DepressionDetectionApi(),
     ProfilePageScreen(),
   ];
 
