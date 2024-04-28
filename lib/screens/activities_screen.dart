@@ -58,7 +58,6 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else if (snapshot.hasData) {
-              if (snapshot.data != null) {
                 return ListView.builder(
                   itemBuilder: (context, index) => ActivityWidget(
                     activity: snapshot.data![index],
@@ -107,7 +106,7 @@ class _ActivitiesScreen extends State<ActivitiesScreen> {
               return const SizedBox.shrink();
             },
           ),
-        ));
+        );
   }
 }
 
