@@ -1,4 +1,4 @@
-import 'package:background_activity_recognition_with_database/screens/signin_screen.dart';
+import 'package:lifespark/screens/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

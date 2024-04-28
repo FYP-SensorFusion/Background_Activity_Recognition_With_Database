@@ -23,6 +23,12 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
     getMostUsedApps();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getMostUsedApps();
+  }
+
   void getMostUsedApps() async {
     try {
       DateTime now = DateTime.now();
@@ -102,15 +108,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
           ),
           // Existing carousel content
           _mostUsedApps.isEmpty
-              ? Center(
-            child: Text(
-              "Give Usage Access permissions...",
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.teal.shade900,
-              ),
-            ),
-          )
+              ? const Center(child: CircularProgressIndicator())
               : CarouselSlider(
             items: _mostUsedApps
                 .map((appInfo) => _buildAppCard(appInfo))
