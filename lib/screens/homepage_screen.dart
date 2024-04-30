@@ -110,9 +110,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _changeTip() async {
     await Future.delayed(const Duration(seconds: 5));
-    setState(() {
-      _currentTipIndex = (_currentTipIndex + 1) % _tipList.length;
-    });
+    if(mounted){
+      setState(() {
+        _currentTipIndex = (_currentTipIndex + 1) % _tipList.length;
+      });
+    }
+
   }
 
   void requestPermissions() async {
