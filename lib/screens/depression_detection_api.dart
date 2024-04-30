@@ -155,7 +155,8 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                     ),
                     onPressed: () async {
                       print('userInput = $userInput');
-                      url = 'http://10.0.2.2:5000/?query=$userInput';
+                      // url = 'http://10.0.2.2:5000/?query=$userInput';
+                      url = 'https://fusionists.pythonanywhere.com/?query=$userInput';
                       // url = 'https://dashboard.render.com/d/dpg-con5kigcmk4c739v7lm0-a:5432/?query=$userInput';
                       output = await fetchData(url);
                       // Create a new DepressionApiModel instance
@@ -170,6 +171,7 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       setState(() {});
 
                       // Check if output is not equal to "There was an error while processing the content."
+                      print('output = $output');
                       if (output != "There was an error while processing the content.") {
                         String contentOutput = "";
                         if (output == "Depression") {
