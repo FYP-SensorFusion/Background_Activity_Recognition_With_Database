@@ -4,7 +4,6 @@ import 'package:lifespark/screens/show_anxiety_report.dart';
 import 'package:lifespark/screens/show_depression_api_report.dart';
 import 'package:lifespark/screens/show_depression_report.dart';
 import 'package:lifespark/screens/signin_screen.dart';
-import 'package:lifespark/widgets/reusable_widget.dart';
 import '../models/anxiety_detection_model.dart';
 import '../models/depression_detection_api_model.dart';
 import 'package:http/http.dart' as http;
@@ -150,8 +149,14 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                   ),
 
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'Submit',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors
+                            .white, // Set text color to white
+                      ),
                     ),
                     onPressed: () async {
                       print('userInput = $userInput');
@@ -161,11 +166,12 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       output = await fetchData(url);
                       // Create a new DepressionApiModel instance
                       DepressionApiModel model = DepressionApiModel(
-                        id: null, // You can set this to null if your database auto-increments the ID
+                        id: null,
                         date: DateTime.now(),
                         description: userInput,
                         result: output,
                       );
+
                       // Save the data to the database
                       await DatabaseHelper.addDepressionApiScore(model);
                       setState(() {});
@@ -188,8 +194,8 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                               content: Text(
                                 '$contentOutput',
                                 style: TextStyle(
-                                  fontSize: 24, // Change this to your desired size
-                                  color: Colors.white, // Change this to your desired color
+                                  fontSize: 24,
+                                  color: Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
