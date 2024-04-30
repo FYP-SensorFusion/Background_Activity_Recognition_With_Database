@@ -120,6 +120,8 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       onChanged: (value) {
                         userInput = value;
                       },
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       obscureText: false,
                       enableSuggestions: true,
                       autocorrect: true,
@@ -146,6 +148,7 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                       ),
                     ),
                   ),
+
                   TextButton(
                     child: Text(
                       'Submit',
@@ -153,6 +156,7 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                     onPressed: () async {
                       print('userInput = $userInput');
                       url = 'http://10.0.2.2:5000/?query=$userInput';
+                      // url = 'https://dashboard.render.com/d/dpg-con5kigcmk4c739v7lm0-a:5432/?query=$userInput';
                       output = await fetchData(url);
                       // Create a new DepressionApiModel instance
                       DepressionApiModel model = DepressionApiModel(
@@ -167,12 +171,20 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
 
                       // Check if output is not equal to "There was an error while processing the content."
                       if (output != "There was an error while processing the content.") {
+                        String contentOutput = "";
+                        if (output == "Depression") {
+                          contentOutput = "You show symptoms of Depression";
+                        } else if (output == "Not Depression") {
+                          contentOutput = "You do not show any symptoms of Depression";
+                        } else {
+                          contentOutput = "I am unable to show any symptoms";
+                        }
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               content: Text(
-                                '$output',
+                                '$contentOutput',
                                 style: TextStyle(
                                   fontSize: 24, // Change this to your desired size
                                   color: Colors.white, // Change this to your desired color

@@ -31,7 +31,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var white;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -149,7 +148,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 onTap: () async {
                   final selectedTime = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
+                    initialDate: activity?.startTime ?? DateTime.now(),
                     firstDate: DateTime(2023, 1, 1),
                     lastDate: DateTime.now(),
                   );
@@ -198,14 +197,20 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         return;
                       }
 
-                      final ActivityModel model = ActivityModel(
-                          type: type,
-                          startTime: startTime,
-                          duration: duration,
-                          lastUpdatedTime: updatedDateTime);
                       if (activity == null) {
+                        final ActivityModel model = ActivityModel(
+                            type: type,
+                            startTime: startTime,
+                            duration: duration,
+                            lastUpdatedTime: updatedDateTime);
                         await DatabaseHelper.addActivity(model);
                       } else {
+                        final ActivityModel model = ActivityModel(
+                            id: activity?.id,
+                            type: type,
+                            startTime: startTime,
+                            duration: duration,
+                            lastUpdatedTime: updatedDateTime);
                         await DatabaseHelper.updateActivity(model);
                       }
 
