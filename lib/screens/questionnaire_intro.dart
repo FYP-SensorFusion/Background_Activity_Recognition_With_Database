@@ -26,7 +26,7 @@ Future<void> showBiWeeklyQuestionnaire(BuildContext context) async {
           ),
           content: Text(
             'This is a questionnaire to check your mental health\n\n'
-                'GAN-7 (Generalized Anxiety Disorder-7) is a seven-item questionnaire designed to assess the severity of generalized anxiety disorder,\n\n'
+                'GAD-7 (Generalized Anxiety Disorder-7) is a seven-item questionnaire designed to assess the severity of generalized anxiety disorder,\n\n'
                 'PHQ-9 (Patient Health Questionnaire-9) is for measuring the severity of depression. It is a self-administered questionnaire with nine items that ask about how often you have experienced certain depression symptoms over the past two weeks.',
             style: TextStyle(
               color: hexStringToColor("FFFFFF"),
