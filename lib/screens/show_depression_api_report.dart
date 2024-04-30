@@ -20,68 +20,81 @@ class DepressionApiList extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 2, // Number of columns
-            childAspectRatio: 0.5, // Aspect ratio of the cards
+            childAspectRatio: 0.9, // Aspect ratio of the cards
             children: <Widget>[
               ...snapshot.data!.map((report) {
                 String formattedDate =
-                DateFormat('yyyy-MM-dd').format(report.date);
-                return Card(
-                  child: ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 10),
-                        Text(
-                          'Date:',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'MySansSerif',
+                    DateFormat('yyyy-MM-dd').format(report.date);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minHeight: 300), // Set your desired height here
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                        child: Card(
+                          child: ListTile(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(height: 10),
+                                Text(
+                                  'Date:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                                Text(
+                                  formattedDate,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[150],
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Result:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                                Text(
+                                  ' ${report.result}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[150],
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Description:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                                Text(
+                                  '${report.description}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[150],
+                                    fontFamily: 'MySansSerif',
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Text(
-                          formattedDate,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[150],
-                            fontFamily: 'MySansSerif',
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Result:',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'MySansSerif',
-                          ),
-                        ),
-                        Text(
-                          ' ${report.result}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[150],
-                            fontFamily: 'MySansSerif',
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Description:',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'MySansSerif',
-                          ),
-                        ),
-                        Text(
-                          '${report.description}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[150],
-                            fontFamily: 'MySansSerif',
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 );
