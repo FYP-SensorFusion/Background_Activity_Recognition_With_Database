@@ -49,9 +49,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                 'GAD-7 Anxiety Test',
                 style: TextStyle(
                   color: hexStringToColor(
-                      "FFFFFF"), // Change this to your desired color
-                  fontFamily:
-                      'SansSerif', // Change this to your desired font family
+                      "FFFFFF"),
                 ),
               ),
               content: SingleChildScrollView(
@@ -123,9 +121,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                       'Please select an answer before proceeding.',
                                     style: TextStyle(
                                       color: hexStringToColor(
-                                          "FFFFFF"), // Change this to your desired color
-                                      fontFamily:
-                                      'SansSerif', // Change this to your desired font family
+                                          "FFFFFF"),
                                     ),),
                                 ),
                               );
@@ -162,9 +158,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                     title: Text('GAD-7 Test Result',
                                       style: TextStyle(
                                         color: hexStringToColor(
-                                            "FFFFFF"), // Change this to your desired color
-                                        fontFamily:
-                                        'SansSerif', // Change this to your desired font family
+                                            "FFFFFF"),
                                       ),),
                                     content: SingleChildScrollView(
                                       child: ListBody(
@@ -172,16 +166,12 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                           Text('score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
-                                                  "FFFFFF"), // Change this to your desired color
-                                              fontFamily:
-                                              'SansSerif', // Change this to your desired font family
+                                                  "FFFFFF"),
                                             ),),
                                           Text(result,
                                             style: TextStyle(
                                               color: hexStringToColor(
-                                                  "FFFFFF"), // Change this to your desired color
-                                              fontFamily:
-                                              'SansSerif', // Change this to your desired font family
+                                                  "FFFFFF"),
                                             ),),
                                         ],
                                       ),
@@ -191,9 +181,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                         child: Text('OK',
                                           style: TextStyle(
                                             color: hexStringToColor(
-                                                "FFFFFF"), // Change this to your desired color
-                                            fontFamily:
-                                            'SansSerif', // Change this to your desired font family
+                                                "FFFFFF"),
                                           ),),
                                         onPressed: () {
                                           Navigator.of(context).pop();

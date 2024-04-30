@@ -70,7 +70,7 @@ class HealthTipCard extends StatelessWidget {
                       child: Text(
                         tip,
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 16.0,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center, // Justify alignment for better text layout

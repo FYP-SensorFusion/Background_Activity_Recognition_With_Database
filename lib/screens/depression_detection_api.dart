@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lifespark/screens/show_anxiety_report.dart';
 import 'package:lifespark/screens/show_depression_api_report.dart';
@@ -40,7 +41,7 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
     }
 
     final response = await http.post(uri, body: {'query': query});
-    print("Response.body = ${response.body}");
+    // print("Response.body = ${response.body}");
     return response.body;
   }
 
@@ -83,10 +84,11 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInScreen()),
-                );
+                FirebaseAuth.instance.signOut().then((value) {
+                  print("Signed Out");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()));
+                });
               },
             ),
           ],
@@ -107,95 +109,157 @@ class _DepressionDetectionApiState extends State<DepressionDetectionApi> {
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(bottom: 15.0),
-                    child: Text(
-                      'Tell us about your day?',
-                      style: TextStyle(
-                        fontSize: 24, // Change this to your desired size
-                        color: Colors
-                            .lightBlue, // Change this to your desired color
+                    margin: EdgeInsets.only(bottom: 30.0),
+                  ),
+                  // reusableTextField_API('How has your day been?', Icons.lightbulb_outline_rounded, false, TextEditingController(text: userInput)),
+                  Container(
+                    margin: EdgeInsets.only(left: 50, right: 50),
+                    child: TextField(
+                      controller: TextEditingController(text: userInput),
+                      onChanged: (value) {
+                        userInput = value;
+                      },
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      obscureText: false,
+                      enableSuggestions: true,
+                      autocorrect: true,
+                      autofocus: false,
+                      cursorColor: Colors.white,
+                      style: TextStyle(color: Colors.white.withOpacity(0.9)),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.lightbulb_outline_rounded,
+                          color: Colors.white70,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () => setState(() => userInput = ''),
+                          icon: Icon(Icons.clear),
+                        ),
+                        labelText: 'How has your day been?',
+                        labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
+                        filled: true,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        fillColor: Colors.white.withOpacity(0.3),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                  TextField(
-                    controller: TextEditingController(text: userInput),
-                    onChanged: (value) {
-                      userInput = value;
-                    },
-                    decoration: InputDecoration(
-                      fillColor:
-                          Colors.white10, // Change this to your desired color
-                      filled: true,
-                      suffixIcon: IconButton(
-                        onPressed: () => setState(() => userInput = ''),
-                        icon: Icon(Icons.clear),
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: Colors.white, // Change this to your desired color
-                    ),
-                  ),
+
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       'Submit',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors
+                            .white, // Set text color to white
+                      ),
                     ),
                     onPressed: () async {
-                      url = 'http://10.0.2.2:5000/?query=$userInput';
+                      print('userInput = $userInput');
+                      // url = 'http://10.0.2.2:5000/?query=$userInput';
+                      url = 'https://fusionists.pythonanywhere.com/?query=$userInput';
+                      // url = 'https://dashboard.render.com/d/dpg-con5kigcmk4c739v7lm0-a:5432/?query=$userInput';
                       output = await fetchData(url);
                       // Create a new DepressionApiModel instance
                       DepressionApiModel model = DepressionApiModel(
-                        id: null, // You can set this to null if your database auto-increments the ID
+                        id: null,
                         date: DateTime.now(),
                         description: userInput,
                         result: output,
                       );
+
                       // Save the data to the database
                       await DatabaseHelper.addDepressionApiScore(model);
                       setState(() {});
+
+                      // Check if output is not equal to "There was an error while processing the content."
+                      print('output = $output');
+                      if (output != "There was an error while processing the content.") {
+                        String contentOutput = "";
+                        if (output == "Depression") {
+                          contentOutput = "You show symptoms of Depression";
+                        } else if (output == "Not Depression") {
+                          contentOutput = "You do not show any symptoms of Depression";
+                        } else {
+                          contentOutput = "I am unable to show any symptoms";
+                        }
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Text(
+                                '$contentOutput',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Close'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
-                  Text(
-                    '$output',
-                    style: TextStyle(
-                      fontSize: 24, // Change this to your desired size
-                      color:
-                          Colors.lightBlue, // Change this to your desired color
+
+                  Container(
+                    margin: EdgeInsets.only(left: 50, right: 50),
+                    child: ElevatedButton(
+                      child: Text(showDepressionApiRecords
+                          ? 'Hide Daily Reports'
+                          : 'Show Daily Reports'),
+                      onPressed: () {
+                        setState(() {
+                          showDepressionApiRecords = !showDepressionApiRecords;
+                        });
+                      },
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                  ElevatedButton(
-                    child: Text(showDepressionApiRecords
-                        ? 'Hide Daily Reports'
-                        : 'Show Daily Reports'),
-                    onPressed: () {
-                      setState(() {
-                        showDepressionApiRecords = !showDepressionApiRecords;
-                      });
-                    },
-                  ),
+                  SizedBox(height: 10),
                   showDepressionApiRecords ? DepressionApiList() : Container(),
-                  ElevatedButton(
-                    child: Text(showDepressionRecords
-                        ? 'Hide Depression Reports'
-                        : "Show Depression Reports"),
-                    onPressed: () {
-                      setState(() {
-                        showDepressionRecords = !showDepressionRecords;
-                      });
-                    },
+                  SizedBox(height: 10),
+                  Container(
+                    margin: EdgeInsets.only(left: 50, right: 50),
+                    child: ElevatedButton(
+                      child: Text(showDepressionRecords
+                          ? 'Hide Depression Reports'
+                          : "Show Depression Reports"),
+                      onPressed: () {
+                        setState(() {
+                          showDepressionRecords = !showDepressionRecords;
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(height: 10),
                   showDepressionRecords ? DepressionList() : Container(),
-                  ElevatedButton(
-                    child: Text(showAnxietyRecords
-                        ? 'Hide Anxiety Reports'
-                        : "Show Anxiety Reports"),
-                    onPressed: () {
-                      setState(() {
-                        showAnxietyRecords = !showAnxietyRecords;
-                      });
-                    },
+                  SizedBox(height: 10),
+                  Container(
+                    margin: EdgeInsets.only(left: 50, right: 50),
+                    child: ElevatedButton(
+                      child: Text(showAnxietyRecords
+                          ? 'Hide Anxiety Reports'
+                          : "Show Anxiety Reports"),
+                      onPressed: () {
+                        setState(() {
+                          showAnxietyRecords = !showAnxietyRecords;
+                        });
+                      },
+                    ),
                   ),
+                  SizedBox(height: 10),
                   showAnxietyRecords ? AnxietyList() : Container(),
                 ],
               ),

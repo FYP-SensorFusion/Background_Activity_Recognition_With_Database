@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lifespark/screens/activities_screen.dart';
 import 'package:lifespark/screens/activity_report_screen.dart';
 import 'package:lifespark/screens/profile_screen.dart';
@@ -107,7 +108,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _changeTip(); // Start tip carousel on load
   }
 
-
   void _changeTip() async {
     await Future.delayed(const Duration(seconds: 5));
     setState(() {
@@ -130,11 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "LIFE SPARK",
-          style: TextStyle(
-              fontSize: 24.0, color: Colors.amberAccent, fontWeight: FontWeight.bold, fontFamily: 'Lucida Handwriting'),
-        ), // Use widget.title for app name
+        title: const Text("Life Spark"),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -148,10 +144,11 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SignInScreen()),
-              );
+              FirebaseAuth.instance.signOut().then((value) {
+                print("Signed Out");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignInScreen()));
+              });
             },
           ),
         ], // App bar color,
@@ -164,48 +161,50 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
-          children: [
-            SizedBox(
-              height: 250,
-              child: CarouselSlider(
-                items: _tipList
-                    .map((tipData) => HealthTipCard(
-                          tip: tipData['tip'] as String, // Access tip from map
-                          iconData: tipData['icon'] as IconData,
-                        )) // Access icon from map                      ))
-                    .toList(),
-                options: CarouselOptions(
-                  height: 250, // Set carousel height
-                  viewportFraction: 1, // Show 80% of each card
-                  enableInfiniteScroll: true, // Loop through tips
-                  autoPlay: true, // Automatic rotation
-                  autoPlayInterval:
-                      const Duration(seconds: 5), // Change time interval
-                  autoPlayAnimationDuration:
-                      const Duration(milliseconds: 800), // Smooth transition
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
+            children: [
+              SizedBox(
+                height: 250,
+                child: CarouselSlider(
+                  items: _tipList
+                      .map((tipData) => HealthTipCard(
+                            tip: tipData['tip'] as String, // Access tip from map
+                            iconData: tipData['icon'] as IconData,
+                          )) // Access icon from map                      ))
+                      .toList(),
+                  options: CarouselOptions(
+                    height: 250, // Set carousel height
+                    viewportFraction: 1, // Show 80% of each card
+                    enableInfiniteScroll: true, // Loop through tips
+                    autoPlay: true, // Automatic rotation
+                    autoPlayInterval:
+                        const Duration(seconds: 5), // Change time interval
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800), // Smooth transition
+                  ),
                 ),
               ),
-            ),
-            FutureBuilder<int>(
-              future: DatabaseHelper.getLastDaySleepingDuration(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else {
-                  final sleepDuration = snapshot.data ?? 0;
-                  return SleepDurationCard(sleepDuration: sleepDuration);
-                }
-              },
-            ),
-            SizedBox(
-              height: 250,
-              child: AppCarouselCard(),
-            ),
-          ],
+              FutureBuilder<int>(
+                future: DatabaseHelper.getLastDaySleepingDuration(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    final sleepDuration = snapshot.data ?? 0;
+                    return SleepDurationCard(sleepDuration: sleepDuration);
+                  }
+                },
+              ),
+              SizedBox(
+                height: 250,
+                child: AppCarouselCard(),
+              ),
+            ],
+          ),
         ),
       ),
     );

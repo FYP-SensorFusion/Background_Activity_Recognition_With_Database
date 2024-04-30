@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: any
   path_provider: any
   google_fonts: ^6.2.0
+  device_apps: ^2.2.0
   http:
 
 dev_dependencies:
