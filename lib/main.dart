@@ -90,9 +90,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Background Activity Recognition',
       theme: ThemeData(
         brightness: Brightness.dark,
-        textTheme: GoogleFonts.comicNeueTextTheme(textTheme).copyWith(
-          bodyMedium: GoogleFonts.permanentMarker(textStyle: textTheme.bodyMedium),
-          bodySmall: GoogleFonts.permanentMarker(textStyle: textTheme.bodyMedium),
+        textTheme: GoogleFonts.antonioTextTheme(textTheme).copyWith(
+          bodyMedium: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
+          bodySmall: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
         ),
       ),
       home: const SignInScreen(),
