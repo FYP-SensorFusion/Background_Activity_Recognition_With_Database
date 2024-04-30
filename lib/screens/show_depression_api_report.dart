@@ -20,7 +20,7 @@ class DepressionApiList extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 2, // Number of columns
-            childAspectRatio: 0.9, // Aspect ratio of the cards
+            childAspectRatio: 0.5, // Aspect ratio of the cards
             children: <Widget>[
               ...snapshot.data!.map((report) {
                 String formattedDate =
