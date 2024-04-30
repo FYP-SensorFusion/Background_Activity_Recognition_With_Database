@@ -48,9 +48,7 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                 'PHQ-9 Depression Test',
                 style: TextStyle(
                   color: hexStringToColor(
-                      "FFFFFF"), // Change this to your desired color
-                  fontFamily:
-                      'SansSerif', // Change this to your desired font family
+                      "FFFFFF"),
                 ),
               ),
               content: SingleChildScrollView(
@@ -123,9 +121,7 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                       'Please select an answer before proceeding.',
                                     style: TextStyle(
                                       color: hexStringToColor(
-                                          "FFFFFF"), // Change this to your desired color
-                                      fontFamily:
-                                      'SansSerif', // Change this to your desired font family
+                                          "FFFFFF"),
                                     ),),
                                 ),
                               );
@@ -165,9 +161,7 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                     title: Text('PHQ-9 Test Result',
                                       style: TextStyle(
                                         color: hexStringToColor(
-                                            "FFFFFF"), // Change this to your desired color
-                                        fontFamily:
-                                        'SansSerif', // Change this to your desired font family
+                                            "FFFFFF"),
                                       ),),
                                     content: SingleChildScrollView(
                                       child: ListBody(
@@ -175,16 +169,12 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                           Text('score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
-                                                  "FFFFFF"), // Change this to your desired color
-                                              fontFamily:
-                                              'SansSerif', // Change this to your desired font family
+                                                  "FFFFFF"),
                                             ),),
                                           Text(result,
                                             style: TextStyle(
                                               color: hexStringToColor(
-                                                  "FFFFFF"), // Change this to your desired color
-                                              fontFamily:
-                                              'SansSerif', // Change this to your desired font family
+                                                  "FFFFFF"),
                                             ),),
                                         ],
                                       ),
@@ -194,9 +184,7 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                         child: Text('OK',
                                           style: TextStyle(
                                             color: hexStringToColor(
-                                                "FFFFFF"), // Change this to your desired color
-                                            fontFamily:
-                                            'SansSerif', // Change this to your desired font family
+                                                "FFFFFF"),
                                           ),),
                                         onPressed: () {
                                           Navigator.of(context).pop();

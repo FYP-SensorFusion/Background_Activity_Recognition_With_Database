@@ -45,7 +45,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                                 Text(
@@ -53,7 +52,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[150],
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -62,7 +60,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                                 Text(
@@ -70,7 +67,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[150],
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -79,7 +75,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                                 Text(
@@ -87,7 +82,6 @@ class DepressionApiList extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[150],
-                                    fontFamily: 'MySansSerif',
                                   ),
                                 ),
                               ],
