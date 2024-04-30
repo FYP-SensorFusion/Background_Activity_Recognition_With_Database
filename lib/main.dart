@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
           bodySmall: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
         ),
       ),
-      home: NavigatorPage(title: '',),
+      home: const SignInScreen(),
       // home: AppCarouselCard(),
     );
   }

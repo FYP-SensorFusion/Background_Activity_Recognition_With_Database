@@ -45,7 +45,7 @@ class _StepScreen extends State<StepScreen> {
     }
 
     // Detect a step when the magnitude of the acceleration crosses a threshold.
-    if (magnitude > 11.0 && (event.y > previousY || event.z > previousZ)) {
+    if (magnitude > 11.5 && (event.y > previousY || event.z > previousZ)) {
       stepCount++;
 
       // Check the time to determine if the user is running or walking.
