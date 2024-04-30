@@ -20,13 +20,13 @@ class DepressionApiList extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             crossAxisCount: 2, // Number of columns
-            childAspectRatio: 0.9, // Aspect ratio of the cards
+            childAspectRatio: 0.65, // Aspect ratio of the cards
             children: <Widget>[
               ...snapshot.data!.map((report) {
                 String formattedDate =
                     DateFormat('yyyy-MM-dd').format(report.date);
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 3.0),
                   child: SingleChildScrollView(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
