@@ -1,4 +1,6 @@
+import 'package:lifespark/screens/navigator_screen.dart';
 import 'package:lifespark/screens/signin_screen.dart';
+import 'package:lifespark/screens/step_screen.dart';
 import 'package:lifespark/services/activity_recognition_function.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +97,8 @@ class MyApp extends StatelessWidget {
           bodySmall: GoogleFonts.oswald(textStyle: textTheme.bodyMedium),
         ),
       ),
-      home: const SignInScreen(),
+      home: SignInScreen(),
+      // home: NavigatorPage(title: "title"),
       // home: AppCarouselCard(),
     );
   }

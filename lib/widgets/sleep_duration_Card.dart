@@ -13,14 +13,14 @@ import '../utils.dart';
     Widget build(BuildContext context) {
       final isGoodSleep = sleepDuration >= 420;
       final message = isGoodSleep
-          ? "You had a good night's sleep!"
-          : "Consider getting more rest tonight.";
+          ? "You had a good\nnight's sleep!"
+          : "Consider getting\nmore rest tonight.";
 
       final durationHours = formatDuration(sleepDuration); // Convert minutes to hours
 
       return Container(
-        height: 200,
-        margin: const EdgeInsets.symmetric(horizontal: 24.0),
+        height: MediaQuery.of(context).size.height,
+        margin: const EdgeInsets.only(left:10 ,right:24 , top:10 , bottom:10 ),
         decoration: BoxDecoration(
           image: const DecorationImage(
             opacity: 0.5,
@@ -54,8 +54,7 @@ import '../utils.dart';
                     ? "You slept $durationHours hours"
                     : "You slept only $durationHours.",
                 style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),

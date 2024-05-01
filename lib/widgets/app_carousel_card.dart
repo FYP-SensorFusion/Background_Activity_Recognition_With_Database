@@ -50,7 +50,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
 
       // Filter out excluded apps and get the top 5 (including replacements)
       List<AppUsageInfo> topFive = _getTopFiveExcluding(infoList);
-      setState(() => _mostUsedApps = topFive);
+      if (mounted) {setState(() => _mostUsedApps = topFive);}
     } on AppUsageException catch (exception) {
       print(exception);
     }
@@ -73,11 +73,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height -
-          kToolbarHeight -
-          kBottomNavigationBarHeight -
-          32.0,
-      margin: const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 24),
+      margin: const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 28),
       decoration: BoxDecoration(
         image: const DecorationImage(
           opacity: 0.6,
@@ -90,7 +86,6 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
         children: [
           // Header container
           Container(
-            padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               image: const DecorationImage(
                 image: AssetImage("assets/images/purple-sky.png"),
