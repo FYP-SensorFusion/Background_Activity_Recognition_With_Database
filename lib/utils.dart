@@ -1,18 +1,22 @@
 String formatDuration(int duration) {
-  final int hours = duration ~/ 60;
-  final int remainingMinutes = (duration % 60);
+final int hours = duration ~/ 3600;
+final int remainingMinutes = (duration % 3600) ~/ 60;
+final int seconds = duration % 60;
 
-  final int days = hours ~/ 24;
-  final int remainingHours = hours % 24;
+final int days = hours ~/ 24;
+final int remainingHours = hours % 24;
 
-  String formattedDuration = '';
-  if (days > 0) {
-    formattedDuration += '${days}d ';
-  }
-  if (remainingHours > 0) {
-    formattedDuration += '${remainingHours} hours ';
-  }
-  formattedDuration += '${remainingMinutes} minutes';
+String formattedDuration = '';
+if (days > 0) {
+formattedDuration += '${days}d ';
+}
+if (remainingHours > 0) {
+formattedDuration += '${remainingHours} hours ';
+}
+if (remainingMinutes > 0) {
+formattedDuration += '${remainingMinutes} minutes ';
+}
+formattedDuration += '${seconds}sec';
 
-  return formattedDuration.trim();
+return formattedDuration.trim();
 }
