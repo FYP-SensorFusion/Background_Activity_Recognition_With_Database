@@ -10,3 +10,5 @@ Features
 7. Most used apps within 24 hours
 8. Summary of activities for the past 30 days - with graph
 9. Summary of depression, anxiety results
+
+![bg](https://github.com/FYP-SensorFusion/Background_Activity_Recognition_With_Database/assets/74991806/eb6d332c-c56b-4852-b401-e2dca77cd81e)
