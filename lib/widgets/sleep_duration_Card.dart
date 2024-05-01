@@ -54,8 +54,7 @@ import '../utils.dart';
                     ? "You slept $durationHours hours"
                     : "You slept only $durationHours.",
                 style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
