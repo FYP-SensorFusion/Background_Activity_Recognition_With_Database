@@ -51,5 +51,11 @@
         <string>Used to get the user's current location.</string>
         <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
         <string>Used to get the user's location even when the app is in the background.</string>
-</dict>
-</plist>
+        <key>NSMotionUsageDescription</key>
+        <string>This application tracks your steps</string>
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>processing</string>
+        </array>
+    </dict>
+    </plist>

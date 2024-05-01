@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lifespark/screens/activities_screen.dart';
-import 'package:lifespark/screens/activity_report_screen.dart';
-import 'package:lifespark/screens/profile_screen.dart';
 import 'package:lifespark/screens/questionnaire_intro.dart';
 import 'package:lifespark/screens/signin_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:lifespark/screens/step_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../check_date.dart';
 import '../services/activity_database_helper.dart';
@@ -170,7 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: CarouselSlider(
                   items: _tipList
                       .map((tipData) => HealthTipCard(
-                            tip: tipData['tip'] as String, // Access tip from map
+                            tip:
+                                tipData['tip'] as String, // Access tip from map
                             iconData: tipData['icon'] as IconData,
                           )) // Access icon from map                      ))
                       .toList(),
@@ -186,21 +185,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              FutureBuilder<int>(
-                future: DatabaseHelper.getLastDaySleepingDuration(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else {
-                    final sleepDuration = snapshot.data ?? 0;
-                    return SleepDurationCard(sleepDuration: sleepDuration);
-                  }
-                },
+              Container(
+                height: 225,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: StepScreen(),
+                    ),
+                    Expanded(
+                      child: FutureBuilder<int>(
+                        future: DatabaseHelper.getLastDaySleepingDuration(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          } else {
+                            final sleepDuration = snapshot.data ?? 0;
+                            return SleepDurationCard(
+                                sleepDuration: sleepDuration);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 250,
+                height: 200,
                 child: AppCarouselCard(),
               ),
             ],
