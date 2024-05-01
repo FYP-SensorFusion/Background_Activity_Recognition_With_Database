@@ -218,6 +218,13 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Anxiety Test'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
       ),
     );
   }
