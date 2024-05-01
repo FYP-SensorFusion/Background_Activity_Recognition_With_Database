@@ -161,48 +161,50 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
-          children: [
-            SizedBox(
-              height: 250,
-              child: CarouselSlider(
-                items: _tipList
-                    .map((tipData) => HealthTipCard(
-                          tip: tipData['tip'] as String, // Access tip from map
-                          iconData: tipData['icon'] as IconData,
-                        )) // Access icon from map                      ))
-                    .toList(),
-                options: CarouselOptions(
-                  height: 250, // Set carousel height
-                  viewportFraction: 1, // Show 80% of each card
-                  enableInfiniteScroll: true, // Loop through tips
-                  autoPlay: true, // Automatic rotation
-                  autoPlayInterval:
-                      const Duration(seconds: 5), // Change time interval
-                  autoPlayAnimationDuration:
-                      const Duration(milliseconds: 800), // Smooth transition
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
+            children: [
+              SizedBox(
+                height: 250,
+                child: CarouselSlider(
+                  items: _tipList
+                      .map((tipData) => HealthTipCard(
+                            tip: tipData['tip'] as String, // Access tip from map
+                            iconData: tipData['icon'] as IconData,
+                          )) // Access icon from map                      ))
+                      .toList(),
+                  options: CarouselOptions(
+                    height: 250, // Set carousel height
+                    viewportFraction: 1, // Show 80% of each card
+                    enableInfiniteScroll: true, // Loop through tips
+                    autoPlay: true, // Automatic rotation
+                    autoPlayInterval:
+                        const Duration(seconds: 5), // Change time interval
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800), // Smooth transition
+                  ),
                 ),
               ),
-            ),
-            FutureBuilder<int>(
-              future: DatabaseHelper.getLastDaySleepingDuration(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else {
-                  final sleepDuration = snapshot.data ?? 0;
-                  return SleepDurationCard(sleepDuration: sleepDuration);
-                }
-              },
-            ),
-            SizedBox(
-              height: 250,
-              child: AppCarouselCard(),
-            ),
-          ],
+              FutureBuilder<int>(
+                future: DatabaseHelper.getLastDaySleepingDuration(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else {
+                    final sleepDuration = snapshot.data ?? 0;
+                    return SleepDurationCard(sleepDuration: sleepDuration);
+                  }
+                },
+              ),
+              SizedBox(
+                height: 250,
+                child: AppCarouselCard(),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -77,14 +77,17 @@ class _ProfilePageScreenState extends State<ProfilePageScreen> {
               padding: EdgeInsets.only(
                   top: height / 3, left: width / 25, right: width / 25),
               child: Container(
-                alignment: Alignment.center,
-                width: 350,
-                height: 200,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    opacity: 0.6,
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
                     image: AssetImage("assets/images/purple-sky.png"),
                     fit: BoxFit.fill,
+                  ),
+                  color:
+                      Colors.purple.shade200, // Use a darker teal for contrast
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
                   ),
                 ),
                 child: Column(
