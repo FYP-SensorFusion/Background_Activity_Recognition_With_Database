@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../models/step_count_model.dart';
+import '../services/step_database_helper.dart';
+
 class StepScreen extends StatefulWidget {
   const StepScreen({super.key});
 
@@ -10,7 +13,7 @@ class StepScreen extends StatefulWidget {
   State<StepScreen> createState() => _StepScreen();
 }
 
-class _StepScreen extends State<StepScreen> {
+class _StepScreen extends State<StepScreen> with WidgetsBindingObserver {
   List<AccelerometerEvent> _accelerometerValues = [];
   int stepCount = 0;
   double previousY = 0.0;
@@ -18,20 +21,65 @@ class _StepScreen extends State<StepScreen> {
   DateTime? _lastStepTime;
   String status = "STEADY"; // Add this line
   List<double> timeDifferences = [];
+  List<DateTime> stepTimes = [];
+  bool isCheckingSteps = true;
 
   late StreamSubscription<AccelerometerEvent> _accelerometerSubscription;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    DateTime now = DateTime.now();
+
+    // Fetch the step count for today's date when the screen is opened
+    DatabaseHelper.getStepCountForDate(DateTime(now.year, now.month, now.day))
+        .then((stepCountModel) {
+      if (stepCountModel != null) {
+
+        if (mounted) {
+          setState(() {
+            stepCount = stepCountModel.stepCount;
+            print("stepcount $stepCount");
+          });
+        }
+      }
+    });
 
     _accelerometerSubscription = accelerometerEvents.listen((event) {
-      setState(() {
-        _accelerometerValues = [event];
-        computeStepCount(event);
-      });
+      if (mounted) {
+        setState(() {
+          _accelerometerValues = [event];
+          computeStepCount(event);
+        });
+      }
     });
   }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    // print("changed");
+    super.dispose();
+    print("changed");
+    DateTime now = DateTime.now();
+    print(stepCount);
+    DatabaseHelper.addStepCount(StepCountModel(
+        stepCount: stepCount, date: DateTime(now.year, now.month, now.day)));
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    DateTime now = DateTime.now();
+    // Check if the current time is midnight
+    if (now.hour == 0 && now.minute == 0 && now.second == 0) {
+      // Update the step count in the database
+      print("Midnight, updating step count");
+      DatabaseHelper.addStepCount(StepCountModel(
+          stepCount: stepCount, date: DateTime(now.year, now.month, now.day-1)));
+    }
+  }
+
 
   void computeStepCount(AccelerometerEvent event) {
     double magnitude =
@@ -42,11 +90,18 @@ class _StepScreen extends State<StepScreen> {
     // If the time since the last step is more than a threshold, set status to STEADY.
     if (_lastStepTime != null && now.difference(_lastStepTime!).inSeconds > 2) {
       status = "STEADY";
+      isCheckingSteps = true;
+      stepTimes = [];
+      timeDifferences = [];
     }
 
     // Detect a step when the magnitude of the acceleration crosses a threshold.
-    if (magnitude > 11.5 && (event.y > previousY || event.z > previousZ)) {
-      stepCount++;
+    if (magnitude > 12 && (event.y > previousY || event.z > previousZ)) {
+      // Add the current time to the list of step times
+      stepTimes.add(now);
+
+      // Remove any step times that are more than 2 seconds old
+      stepTimes.removeWhere((time) => now.difference(time).inSeconds > 2);
 
       // Check the time to determine if the user is running or walking.
       if (_lastStepTime != null) {
@@ -65,9 +120,23 @@ class _StepScreen extends State<StepScreen> {
             timeDifferences.reduce((a, b) => a + b) / timeDifferences.length;
 
         // If the mean time difference is less than a threshold, the user is running.
+        // If there are at least 20 steps in the first 2 seconds if he is running , count it as walking
+        // If there are at least 8 steps in the first 2 seconds if he is walking
         if (meanTimeDifference < 100) {
-          status = "RUNNING";
-        } else {
+          if (isCheckingSteps && stepTimes.length >= 20) {
+            status = "RUNNING";
+            stepCount += stepTimes.length;
+            isCheckingSteps = false;
+          } else if (!isCheckingSteps) {
+            stepCount++;
+            status = "RUNNING";
+          }
+        } else if (isCheckingSteps && stepTimes.length >= 10) {
+          status = "WALKING";
+          stepCount += stepTimes.length;
+          isCheckingSteps = false;
+        } else if (!isCheckingSteps) {
+          stepCount++;
           status = "WALKING";
         }
       }
