@@ -117,11 +117,11 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                 null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
+                                  backgroundColor: Colors.black87,
                                   content: Text(
                                       'Please select an answer before proceeding.',
                                     style: TextStyle(
-                                      color: hexStringToColor(
-                                          "FFFFFF"),
+                                      color: Colors.white
                                     ),),
                                 ),
                               );
@@ -166,15 +166,17 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('score: $score.',
+                                          Text('Score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
+                                              fontSize: 48
                                             ),),
                                           Text(result,
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
+                                              fontSize: 48
                                             ),),
                                         ],
                                       ),
