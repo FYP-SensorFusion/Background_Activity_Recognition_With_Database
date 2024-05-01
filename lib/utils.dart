@@ -11,10 +11,10 @@ if (days > 0) {
 formattedDuration += '${days}d ';
 }
 if (remainingHours > 0) {
-formattedDuration += '${remainingHours}h ';
+formattedDuration += '${remainingHours} hours ';
 }
 if (remainingMinutes > 0) {
-formattedDuration += '${remainingMinutes}min ';
+formattedDuration += '${remainingMinutes} minutes ';
 }
 formattedDuration += '${seconds}sec';
 

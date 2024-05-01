@@ -50,7 +50,7 @@ class _AppCarouselCardState extends State<AppCarouselCard> {
 
       // Filter out excluded apps and get the top 5 (including replacements)
       List<AppUsageInfo> topFive = _getTopFiveExcluding(infoList);
-      setState(() => _mostUsedApps = topFive);
+      if (mounted) {setState(() => _mostUsedApps = topFive);}
     } on AppUsageException catch (exception) {
       print(exception);
     }

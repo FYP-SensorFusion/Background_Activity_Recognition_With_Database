@@ -117,11 +117,11 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                             if (anxietyScores[currentQuestionIndex] == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
+                                  backgroundColor: Colors.black87,
                                   content: Text(
                                       'Please select an answer before proceeding.',
                                     style: TextStyle(
-                                      color: hexStringToColor(
-                                          "FFFFFF"),
+                                      color: Colors.white
                                     ),),
                                 ),
                               );
@@ -163,15 +163,17 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('score: $score.',
+                                          Text('Score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
+                                              fontSize: 48
                                             ),),
                                           Text(result,
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
+                                                fontSize: 48
                                             ),),
                                         ],
                                       ),
@@ -216,6 +218,13 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Anxiety Test'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/purple-sky.png'),
+                fit: BoxFit.fill),
+          ),
+        ),
       ),
     );
   }
