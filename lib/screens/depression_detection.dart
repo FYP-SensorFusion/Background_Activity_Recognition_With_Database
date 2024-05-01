@@ -232,28 +232,28 @@ class _DepressionDetectionState extends State<DepressionDetection> {
   }
 }
 
-class ResultScreen extends StatelessWidget {
-  final double score;
-  final String result;
-
-  ResultScreen({Key? key, required this.score, required this.result})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Test Result'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Your score is $score.'),
-            Text(result),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class ResultScreen extends StatelessWidget {
+//   final double score;
+//   final String result;
+//
+//   ResultScreen({Key? key, required this.score, required this.result})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Test Result'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text('Your score is $score.'),
+//             Text(result),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

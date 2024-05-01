@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     requestPermissions();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (await hasTwoWeeksPassedSinceLastTest()) {
+      // if (await hasTwoWeeksPassedSinceLastTest()) {
         // Show the bi-weekly questionnaire dialog
         await showBiWeeklyQuestionnaire(context);
         // After the dialog is dismissed, start the AnxietyDetection screen
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         );
-      }
+      // }
     });
     _changeTip(); // Start tip carousel on load
   }
