@@ -10,9 +10,9 @@ String formatDuration(int duration) {
     formattedDuration += '${days}d ';
   }
   if (remainingHours > 0) {
-    formattedDuration += '${remainingHours}h ';
+    formattedDuration += '${remainingHours} hours ';
   }
-  formattedDuration += '${remainingMinutes}min';
+  formattedDuration += '${remainingMinutes} minutes';
 
   return formattedDuration.trim();
 }
