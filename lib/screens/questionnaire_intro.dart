@@ -6,15 +6,7 @@ Future<void> showBiWeeklyQuestionnaire(BuildContext context) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return Theme(
-        data: ThemeData(
-          brightness: Brightness.dark,
-          textTheme: GoogleFonts.comicNeueTextTheme(Theme.of(context).textTheme).copyWith(
-            bodyText1: GoogleFonts.permanentMarker(textStyle: Theme.of(context).textTheme.bodyText1),
-            bodyText2: GoogleFonts.permanentMarker(textStyle: Theme.of(context).textTheme.bodyText2),
-          ),
-        ),
-        child: AlertDialog(
+      return AlertDialog(
           title: const Text(
             'Bi-weekly Questionnaire',
             style: TextStyle(
@@ -48,8 +40,7 @@ Future<void> showBiWeeklyQuestionnaire(BuildContext context) async {
               },
             ),
           ],
-        ),
-      );
+        );
     },
   );
 }

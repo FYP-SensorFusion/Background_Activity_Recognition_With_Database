@@ -163,7 +163,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('score: $score.',
+                                          Text('Score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
@@ -173,6 +173,7 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
+                                                fontSize: 48
                                             ),),
                                         ],
                                       ),
@@ -183,7 +184,6 @@ class _AnxietyDetectionState extends State<AnxietyDetection> {
                                           style: TextStyle(
                                             color: hexStringToColor(
                                                 "FFFFFF"),
-                                            fontSize: 48
                                           ),),
                                         onPressed: () {
                                           Navigator.of(context).pop();

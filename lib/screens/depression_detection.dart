@@ -166,7 +166,7 @@ class _DepressionDetectionState extends State<DepressionDetection> {
                                     content: SingleChildScrollView(
                                       child: ListBody(
                                         children: <Widget>[
-                                          Text('score: $score.',
+                                          Text('Score: $score.',
                                             style: TextStyle(
                                               color: hexStringToColor(
                                                   "FFFFFF"),
