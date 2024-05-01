@@ -84,8 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     requestPermissions();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (await hasTwoWeeksPassedSinceLastTest()) {
-        // Show the bi-weekly questionnaire dialogsahantestmail@gmial.com MC@project3
-        s
+        // Show the bi-weekly questionnaire dialog
         await showBiWeeklyQuestionnaire(context);
         // After the dialog is dismissed, start the AnxietyDetection screen
         Navigator.push(
