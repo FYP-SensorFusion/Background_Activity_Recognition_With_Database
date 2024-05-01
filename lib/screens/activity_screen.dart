@@ -192,7 +192,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       // Validate duration (optional)
                       int? duration;
                       try {
-                        duration = int.parse(enteredDuration);
+                        duration = int.parse(enteredDuration)*60;
                       } catch (e) {
                         return;
                       }
