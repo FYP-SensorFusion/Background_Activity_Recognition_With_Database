@@ -1,4 +1,4 @@
-# HEALTH SPIKE
+# LIFE SPARK
 
 Features
 1. Complete Sign In / Sign out system with Reset Password functionality
